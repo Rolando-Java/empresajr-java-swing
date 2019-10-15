@@ -17,6 +17,39 @@ public class Validacion {
         
     }
     
+    static boolean repite_codigo_estilo(String codigo_estilo){
+        boolean band=false;
+        Connection cn=null;
+        Statement st=null;
+        try{
+            int cantidad_filas=0;
+            cn=Conection.getConnection();
+            st=cn.createStatement();
+            
+            ResultSet rs=st.executeQuery("select count(*) from dbo.FICHA_TECNICA");
+            
+            if(rs.next()){
+                cantidad_filas=rs.getInt(1);
+            }
+            
+            if(cantidad_filas>0){
+                ResultSet rs2=st.executeQuery("select cod_ficha from dbo.FICHA_TECNICA where cod_estilo='"+codigo_estilo+"'");
+                
+                if(rs2.next()){
+                    band=true;
+                }else{
+                    band=false;
+                }
+            }else{
+                band=false;
+            }
+            
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        return band;
+    }
+    
     static boolean existencia_numero(String cad){
         boolean band=false;
         int tan=cad.length();

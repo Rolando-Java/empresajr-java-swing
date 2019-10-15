@@ -5,6 +5,12 @@
  */
 package gui;
 
+import conn.Conection;
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Rolando Andre
@@ -52,6 +58,7 @@ public class Frm5 extends javax.swing.JFrame {
         btnGrabar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
         txt_descripcion = new javax.swing.JTextField();
+        btn_limpiar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -116,7 +123,12 @@ public class Frm5 extends javax.swing.JFrame {
         getContentPane().add(txt_fechaCreacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 369, 200, -1));
 
         btnGrabar.setText("Grabar");
-        getContentPane().add(btnGrabar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 402, 110, 30));
+        btnGrabar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGrabarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnGrabar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 400, 110, 30));
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -124,8 +136,16 @@ public class Frm5 extends javax.swing.JFrame {
                 btnBuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 402, 100, 30));
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 400, 100, 30));
         getContentPane().add(txt_descripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 161, 200, -1));
+
+        btn_limpiar.setText("Limpiar");
+        btn_limpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_limpiarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_limpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 400, 100, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -139,8 +159,123 @@ public class Frm5 extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_estiloActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+        Frm4 obj=new Frm4();
+        obj.setVisible(true);
+        obj.setLocationRelativeTo(null);
+        obj.setResizable(false);
+        this.dispose();
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrabarActionPerformed
+        Connection cn=null;
+        Statement st=null;
+        try{
+            String codigo_estilo=txt_estilo.getText().toUpperCase().trim();
+            if(!codigo_estilo.equalsIgnoreCase("")){
+                if(!Validacion.repite_codigo_estilo(codigo_estilo)){
+                    String version=txt_version.getText().toUpperCase().trim();
+                    if(!version.equalsIgnoreCase("")){
+                        String division=txt_division.getText().toUpperCase().trim();
+                        if(!division.equalsIgnoreCase("")){
+                            String descripcion=txt_descripcion.getText().toUpperCase().trim();
+                            if(!descripcion.equalsIgnoreCase("")){
+                                String destino=txt_destino.getText().toUpperCase().trim();
+                                if(!destino.equalsIgnoreCase("")){
+                                    if(!Validacion.existencia_numero(destino)){
+                                        String temporada=txt_temporada.getText().toUpperCase().trim();
+                                        if(!temporada.equalsIgnoreCase("")){
+                                            String tela_principal=txt_telaPrincipal.getText().toUpperCase().trim();
+                                            if(!tela_principal.equalsIgnoreCase("")){
+                                                String proceso=txt_proceso.getText().toUpperCase().trim();
+                                                if(!proceso.equalsIgnoreCase("")){
+                                                    if(!Validacion.existencia_numero(proceso)){
+                                                        String artes=txt_arte.getText().toUpperCase().trim();
+                                                        if(!artes.equalsIgnoreCase("")){
+                                                            if(!Validacion.existencia_numero(artes)){
+                                                                String etiqueta=txt_etiqueta.getText().toUpperCase().trim();
+                                                                if(!etiqueta.equalsIgnoreCase("")){
+                                                                    if(!Validacion.existencia_numero(etiqueta)){
+                                                                        String fechaString="";
+                                                                        Date fecha=txt_fechaCreacion.getDate();
+                                                                        if(fecha!=null){
+                                                                            int input=JOptionPane.showConfirmDialog(null, "Estás seguro?","Escoger una opción",2,3);
+                                                                            if(input==0){
+                                                                                SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yy");
+                                                                                fechaString=sdf.format(fecha);
+
+                                                                                cn=Conection.getConnection();
+                                                                                st=cn.createStatement();
+
+                                                                                st.executeUpdate("insert into dbo.FICHA_TECNICA(COD_ESTILO,VERSION,DIVISION,DESCRIPCION,DESTINO,TEMPORADA,TELA_PRICNIPAL,PROCESO,ARTES,ETIQUETA,FECHA_CREACION) VALUES('"+codigo_estilo+"','"+version+"','"+division+"','"+descripcion+"','"+destino+"','"+temporada+"','"+tela_principal+"','"+proceso+"','"+artes+"','"+etiqueta+"',convert(datetime,'"+fechaString+"',5))");
+
+                                                                                JOptionPane.showMessageDialog(null, "Se ingresó correctamente!!");     
+                                                                            }
+                                                                        }else{
+                                                                            JOptionPane.showMessageDialog(null,"Complete todos los campos!!","Mensaje",3);
+                                                                        }
+                                                                    }else{
+                                                                        JOptionPane.showMessageDialog(null,"La etiqueta no debe contener números!!","Mensaje",2);
+                                                                    }
+                                                                }else{
+                                                                    JOptionPane.showMessageDialog(null,"Complete todos los campos!!","Mensaje",3);
+                                                                }
+                                                            }else{
+                                                                JOptionPane.showMessageDialog(null,"Artes no debe contener números!!","Mensaje",2);
+                                                            }
+                                                        }else{
+                                                            JOptionPane.showMessageDialog(null,"Complete todos los campos!!","Mensaje",3);
+                                                        }
+                                                    }else{
+                                                        JOptionPane.showMessageDialog(null,"El proceso no debe contener números!!","Mensaje",2);
+                                                    }
+                                                }else{
+                                                    JOptionPane.showMessageDialog(null,"Complete todos los campos!!","Mensaje",3);
+                                                }
+                                            }else{
+                                                JOptionPane.showMessageDialog(null,"Complete todos los campos!!","Mensaje",3);
+                                            }
+                                        }else{
+                                           JOptionPane.showMessageDialog(null,"Complete todos los campos!!","Mensaje",3); 
+                                        }
+                                    }else{
+                                        JOptionPane.showMessageDialog(null,"El destino no debe contener números!!","Mensaje",2);
+                                    }
+                                }else{
+                                    JOptionPane.showMessageDialog(null,"Complete todos los campos!!","Mensaje",3);
+                                }
+                            }else{
+                                JOptionPane.showMessageDialog(null,"Complete todos los campos!!","Mensaje",3);
+                            }
+                        }else{
+                            JOptionPane.showMessageDialog(null,"Complete todos los campos!!","Mensaje",3);
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null,"Complete todos los campos!!","Mensaje",3);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Ese codigo de estilo no existe!!","Mensaje",2);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null,"Complete todos los campos!!","Mensaje",3);
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null,ex.getMessage());
+        }
+    }//GEN-LAST:event_btnGrabarActionPerformed
+
+    private void btn_limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limpiarActionPerformed
+        txt_estilo.setText("");
+        txt_version.setText("");
+        txt_division.setText("");
+        txt_descripcion.setText("");
+        txt_destino.setText("");
+        txt_temporada.setText("");
+        txt_telaPrincipal.setText("");
+        txt_proceso.setText("");
+        txt_arte.setText("");
+        txt_etiqueta.setText("");
+        txt_fechaCreacion.setDate(null);
+    }//GEN-LAST:event_btn_limpiarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -180,6 +315,7 @@ public class Frm5 extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnGrabar;
+    private javax.swing.JButton btn_limpiar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
