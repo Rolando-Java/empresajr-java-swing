@@ -24,6 +24,7 @@ public class Frm extends javax.swing.JFrame {
      */
     public Frm() {
         initComponents();
+        txt_contrasena.setEchoChar('*');
     }
 
     /**
@@ -38,8 +39,8 @@ public class Frm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txt_usuario = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txt_contrasena = new javax.swing.JTextField();
         btn_sesion = new javax.swing.JButton();
+        txt_contrasena = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -54,6 +55,12 @@ public class Frm extends javax.swing.JFrame {
             }
         });
 
+        txt_contrasena.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_contrasenaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -62,15 +69,13 @@ public class Frm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(83, 83, 83)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(27, 27, 27)
-                                .addComponent(txt_contrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txt_usuario, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                            .addComponent(txt_contrasena)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(143, 143, 143)
                         .addComponent(btn_sesion)))
@@ -87,9 +92,9 @@ public class Frm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txt_contrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
+                .addGap(36, 36, 36)
                 .addComponent(btn_sesion)
-                .addContainerGap(110, Short.MAX_VALUE))
+                .addContainerGap(113, Short.MAX_VALUE))
         );
 
         pack();
@@ -112,7 +117,7 @@ public class Frm extends javax.swing.JFrame {
             }
             
             if(existe_sesion){
-                Frm7 objF=new Frm7();
+                Frm8 objF=new Frm8();
                 objF.setVisible(true);
                 objF.setLocationRelativeTo(null);
                 objF.setResizable(false);
@@ -126,6 +131,10 @@ public class Frm extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btn_sesionActionPerformed
+
+    private void txt_contrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_contrasenaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_contrasenaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,7 +175,7 @@ public class Frm extends javax.swing.JFrame {
     private javax.swing.JButton btn_sesion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField txt_contrasena;
+    private javax.swing.JPasswordField txt_contrasena;
     private javax.swing.JTextField txt_usuario;
     // End of variables declaration//GEN-END:variables
 }
