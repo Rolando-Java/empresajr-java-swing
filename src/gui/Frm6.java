@@ -47,10 +47,10 @@ public class Frm6 extends javax.swing.JFrame {
             cn=Conection.getConnection();
             st=cn.createStatement();
             
-            ResultSet rs=st.executeQuery("select codigo_estilo from dbo.empleados order by codigo_estilo asc;");
+            ResultSet rs=st.executeQuery("select descripcion from dbo.FUNCION");
             
             while(rs.next()){
-                cbo_codigo_estilo.addItem(rs.getString(1));
+                cbo_funcion.addItem(rs.getString(1));
             }
             
         }catch(Exception e){
@@ -65,13 +65,14 @@ public class Frm6 extends javax.swing.JFrame {
     }
     
     public void rellenar_tabla(){
+        this.dni=null;
         Connection cn=null;
         Statement st=null;
         try{
             cn=Conection.getConnection();
             st=cn.createStatement();
             
-            ResultSet rs=st.executeQuery("select apellido as APELLIDOS,nombre as NOMBRE,direccion as DIRECCION,telefono as TELEFONO,funcion as FUNCION,CONVERT(VARCHAR(10),fecha_nacimiento, 105) as \"FECHA/NACIMIENTO\",correo as CORREO,dni as DNI,nacionalidad as NACIONALIDAD from dbo.empleados order by APELLIDOS asc;");//consulta sql para mostrar todas las filas de manetnimeitno de empleado
+            ResultSet rs=st.executeQuery("select apellido as APELLIDO,nombre as NOMBRE,direccion as DIRECCION,telefono as TELEFONO,F.DESCRIPCION as FUNCION,convert(varchar,fecha_nac,105) as FECHA_NAC,correo as CORREO,dni as DNI,nacionalidad as NACIONALIDAD from dbo.EMPLEADO E,dbo.FUNCION F where E.COD_FUNCION=F.COD_FUNCION order by APELLIDO asc");
             
             ResultSetMetaData md=rs.getMetaData();
             int cantidad_columnas=md.getColumnCount();   
@@ -123,10 +124,10 @@ public class Frm6 extends javax.swing.JFrame {
         btn_listar = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         txt_nacionalidad = new javax.swing.JTextField();
-        cbo_codigo_estilo = new javax.swing.JComboBox();
         jLabel6 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         cbo_funcion = new javax.swing.JComboBox();
+        txt_estilo = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuitem1 = new javax.swing.JMenuItem();
@@ -217,9 +218,6 @@ public class Frm6 extends javax.swing.JFrame {
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 330, -1, -1));
         getContentPane().add(txt_nacionalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 330, 173, -1));
 
-        cbo_codigo_estilo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "......................" }));
-        getContentPane().add(cbo_codigo_estilo, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 80, 100, 20));
-
         jLabel6.setText("Cargo/Función:");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 210, -1, -1));
 
@@ -231,8 +229,9 @@ public class Frm6 extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 120, 130, 30));
 
-        cbo_funcion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "..................", "a", "b", "c", "d", "f", "g" }));
+        cbo_funcion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { ".................." }));
         getContentPane().add(cbo_funcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 210, -1, -1));
+        getContentPane().add(txt_estilo, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 80, 130, -1));
 
         jMenu1.setText("Option");
 
@@ -256,33 +255,48 @@ public class Frm6 extends javax.swing.JFrame {
         Connection cn=null;
         Statement st=null;
         try{
-            String codigo_estilo=cbo_codigo_estilo.getSelectedItem().toString();
+            String codigo_estilo=txt_estilo.getText().toUpperCase().trim();
             
-            if(!codigo_estilo.equalsIgnoreCase("......................")){
-                cn=Conection.getConnection();
-                st=cn.createStatement();
+            if(!codigo_estilo.equalsIgnoreCase("")){
+                if(Validacion.existe_codigo_estilo(codigo_estilo)){
+                    int cantidad_filas=0;
+                    cn=Conection.getConnection();
+                    st=cn.createStatement();
 
-                ResultSet rs=st.executeQuery("select apellido as APELLIDOS,nombre as NOMBRE,direccion as DIRECCION,telefono as TELEFONO,funcion as FUNCION,CONVERT(VARCHAR(10),fecha_nacimiento, 105) as \"FECHA/NACIMIENTO\",correo as CORREO,dni as DNI,nacionalidad as NACIONALIDAD from dbo.empleados where codigo_estilo='"+codigo_estilo+"' order by APELLIDOS asc ;");//consulta sql para mostrar todas la filas de manetnimeitno de empleado con ese codigo de estilo
-
-                modelo1.setColumnCount(0);
-                modelo1.setRowCount(0);
-
-                ResultSetMetaData md=rs.getMetaData();
-                int cantidad_columnas=md.getColumnCount();
-                for(int i=1;i<=cantidad_columnas;i++){
-                    modelo1.addColumn(md.getColumnLabel(i));
-                }
-
-                while(rs.next()){
-                    Object[] fila=new Object[cantidad_columnas];
-                    for(int i=0;i<cantidad_columnas;i++){
-                        fila[i]=rs.getObject(i+1);
+                    ResultSet rs2=st.executeQuery("select count(*) from dbo.FICHA_TECNICA F,dbo.EMPLEADO_FICHA EF,dbo.EMPLEADO E,dbo.FUNCION U where cod_estilo='"+codigo_estilo+"' and F.COD_FICHA=EF.COD_FICHA and E.COD_EMP=EF.COD_EMP and U.COD_FUNCION=E.COD_FUNCION");
+                    
+                    if(rs2.next()){
+                        cantidad_filas=rs2.getInt(1);
                     }
-                    modelo1.addRow(fila);
+                    
+                    if(cantidad_filas>0){
+                        ResultSet rs=st.executeQuery("select apellido as APELLIDO,nombre as NOMBRE,direccion as DIRECCION,telefono as TELEFONO,U.DESCRIPCION as FUNCION,fecha_nac as FECHA_NAC,correo as CORREO,dni as DNI,nacionalidad as NACIONALIDAD from dbo.FICHA_TECNICA F,dbo.EMPLEADO_FICHA EF,dbo.EMPLEADO E,dbo.FUNCION U where cod_estilo='C001' and F.COD_FICHA=EF.COD_FICHA and E.COD_EMP=EF.COD_EMP and U.COD_FUNCION=E.COD_FUNCION order by E.APELLIDO asc");
+
+                        modelo1.setColumnCount(0);
+                        modelo1.setRowCount(0);
+
+                        ResultSetMetaData md=rs.getMetaData();
+                        int cantidad_columnas=md.getColumnCount();
+                        for(int i=1;i<=cantidad_columnas;i++){
+                            modelo1.addColumn(md.getColumnLabel(i));
+                        }
+        
+                        while(rs.next()){
+                            Object[] fila=new Object[cantidad_columnas];
+                            for(int i=0;i<cantidad_columnas;i++){
+                                fila[i]=rs.getObject(i+1);
+                            }
+                            modelo1.addRow(fila);
+                        }
+                        JOptionPane.showMessageDialog(null,"Búsqueda exitosa!!");
+                    }else{
+                        JOptionPane.showMessageDialog(null,"No hay datos que mostrar!!");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null,"Codigo de estilo no existe!!","Mensaje",3);
                 }
-                JOptionPane.showMessageDialog(null,"Búsqueda exitosa!!");
             }else{
-                JOptionPane.showMessageDialog(null,"El código no existe","Mensaje",3);
+                JOptionPane.showMessageDialog(null,"Complete el campo!!","Mensaje",3);
             }
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -295,8 +309,6 @@ public class Frm6 extends javax.swing.JFrame {
         try{
             
             if(dni!=null){
-                int input=JOptionPane.showConfirmDialog(null, "Estás seguro?","Escoger una opción",2,3);
-                if(input==0){
                     String apellido=txt_apellido.getText().toUpperCase().trim();
                     if(!apellido.equalsIgnoreCase("")){
                         if(!Validacion.existencia_numero(apellido)){
@@ -324,14 +336,23 @@ public class Frm6 extends javax.swing.JFrame {
                                                                         String nacionalidad=txt_nacionalidad.getText().toUpperCase().trim();
                                                                         if(!nacionalidad.equalsIgnoreCase("")){
                                                                             if(!Validacion.existencia_numero(nacionalidad)){
-                                                                                cn=Conection.getConnection();
-                                                                                st=cn.createStatement();
+                                                                                int input=JOptionPane.showConfirmDialog(null, "Estás seguro?","Escoger una opción",2,3);
+                                                                                if(input==0){
+                                                                                    String codigo_funcion="";
+                                                                                    cn=Conection.getConnection();
+                                                                                    st=cn.createStatement();
 
-                                                                                st.executeUpdate("update dbo.empleados set apellido='"+apellido+"',nombre='"+nombre+"',direccion='"+direccion+"',telefono='"+telefono+"',funcion='"+funcion+"',fecha_nacimiento=convert(datetime,'"+fechaString+"',5),correo='"+correo+"',dni='"+dni+"',nacionalidad='"+nacionalidad+"' where dni='"+this.dni+"';");//sentencia sql para actualizar una fila de la tabla donde el dni se encuentre
+                                                                                    ResultSet rs=st.executeQuery("select cod_funcion from dbo.FUNCION where descripcion='"+funcion+"'");
 
-                                                                                cargarTabla();
+                                                                                    if(rs.next()){
+                                                                                        codigo_funcion=rs.getString(1);
+                                                                                    }
 
-                                                                                JOptionPane.showMessageDialog(null, "Se modificó correctamente!!");   
+                                                                                    st.executeUpdate("update dbo.EMPLEADO set apellido='"+apellido+"',nombre='"+nombre+"',direccion='"+direccion+"',telefono='"+telefono+"',cod_funcion='"+codigo_funcion+"',fecha_nac=convert(datetime,'"+fechaString+"',5),correo='"+correo+"',dni='"+dni+"',nacionalidad='"+nacionalidad+"' where dni='"+this.dni+"'");
+                                                                                    cargarTabla();
+
+                                                                                    JOptionPane.showMessageDialog(null, "Se modificó correctamente!!");      
+                                                                                }
                                                                             }else{
                                                                                 JOptionPane.showMessageDialog(null,"La nacionalidad no debe contener números!!","Mensaje",2);
                                                                             }
@@ -377,7 +398,6 @@ public class Frm6 extends javax.swing.JFrame {
                     }else{
                         JOptionPane.showMessageDialog(null, "Complete todos los campos!!","Mesanje",3);
                     }
-                }
             }else{
                 JOptionPane.showMessageDialog(null, "Seleccione una fila de la tabla");
             }
@@ -429,7 +449,8 @@ public class Frm6 extends javax.swing.JFrame {
                 if(input==0){
                     cn=Conection.getConnection();
                     st=cn.createStatement();
-                    st.executeUpdate("delete from dbo.empleados where dni='"+this.dni+"'");//sentencia sql para eliminar una fila de la tabla donde el dni se encuentre
+                    st.executeUpdate("delete from dbo.EMPLEADO_FICHA where COD_EMP=(select cod_emp from empleado where dni='"+this.dni+"')");
+                    st.executeUpdate("delete from dbo.empleado where dni='"+this.dni+"'");//sentencia sql para eliminar una fila de la tabla donde el dni se encuentre
                     cargarTabla();
                     JOptionPane.showMessageDialog(null, "Se eliminó correctamente!!");  
                 }
@@ -509,7 +530,6 @@ public class Frm6 extends javax.swing.JFrame {
     private javax.swing.JButton btn_eliminar;
     private javax.swing.JButton btn_listar;
     private javax.swing.JButton btn_modificar;
-    private javax.swing.JComboBox cbo_codigo_estilo;
     private javax.swing.JComboBox cbo_funcion;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -531,6 +551,7 @@ public class Frm6 extends javax.swing.JFrame {
     private javax.swing.JTextField txt_correo;
     private javax.swing.JTextField txt_direccion;
     private javax.swing.JTextField txt_dni;
+    private javax.swing.JTextField txt_estilo;
     private com.toedter.calendar.JDateChooser txt_fechaNacimiento;
     private javax.swing.JTextField txt_nacionalidad;
     private javax.swing.JTextField txt_nombre;

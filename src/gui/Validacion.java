@@ -17,6 +17,26 @@ public class Validacion {
         
     }
     
+    static boolean existe_codigo_estilo(String codigo_estilo){
+        boolean band=false;
+        Connection cn=null;
+        Statement st=null;
+        try{
+            cn=Conection.getConnection();
+            st=cn.createStatement();
+            
+            ResultSet rs2=st.executeQuery("select cod_ficha from dbo.FICHA_TECNICA where cod_estilo='"+codigo_estilo+"'");
+                
+            if(rs2.next()){
+                band=true;
+            }
+            
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        return band;
+    }
+    
     static boolean repite_codigo_estilo(String codigo_estilo){
         boolean band=false;
         Connection cn=null;
