@@ -24,6 +24,7 @@ public class Frm7 extends javax.swing.JFrame {
      */
     public Frm7() {
         initComponents();
+        llenar_combo();
     }
 
     /**
@@ -128,7 +129,7 @@ public class Frm7 extends javax.swing.JFrame {
         });
         getContentPane().add(btnMostrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 204, 90, 40));
 
-        cbo_funcion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "..................", "a", "b", "c", "d", "f", "g" }));
+        cbo_funcion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { ".................." }));
         getContentPane().add(cbo_funcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 195, -1, -1));
 
         btn_limpiar.setText("Limpiar");
@@ -142,6 +143,25 @@ public class Frm7 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void llenar_combo(){
+        Connection cn=null;
+        Statement st=null;
+        try{
+            cn=Conection.getConnection();
+            st=cn.createStatement();
+            
+            ResultSet rs=st.executeQuery("select descripcion from dbo.funcion");
+            
+            while(rs.next()){
+                cbo_funcion.addItem(rs.getString(1));
+            }
+            
+            
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+    
     private void txt_direccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_direccionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_direccionActionPerformed
@@ -179,16 +199,33 @@ public class Frm7 extends javax.swing.JFrame {
                                                                     if(!Validacion.existencia_numero(nacionalidad)){
                                                                         String codigo_estilo=txt_codigoEstilo.getText().toUpperCase().trim();
                                                                         if(!codigo_estilo.equalsIgnoreCase("")){
-                                                                            if(!Validacion.repite_codigoEstilo(codigo_estilo)){
-                                                                                cn=Conection.getConnection();
-                                                                                st=cn.createStatement();
-                                                                                    
-                                                                                st.executeUpdate("insert into dbo.empleados values('"+nombre+"','"+apellido+"','"+direccion+"','"+telefono+"','"+funcion+"',convert(datetime,'"+fechaString+"',5),'"+correo+"','"+dni+"','"+nacionalidad+"','"+codigo_estilo+"');");//sentencia para ingresar los datos
+                                                                            String codigo_funcion="",codigo_ficha="";
+                                                                            cn=Conection.getConnection();
+                                                                            st=cn.createStatement();
+                                                                            
+                                                                            ResultSet rs=st.executeQuery("select cod_funcion from dbo.FUNCION where descripcion='"+funcion+"'");
+                                                                            
+                                                                            if(rs.next()){
+                                                                                codigo_funcion=rs.getString(1);
+                                                                            }
                                                                                 
+                                                                            ResultSet rs2=st.executeQuery("select cod_ficha from ficha_tecnica where cod_estilo='"+codigo_estilo+"'");
+                                                                            
+                                                                            if(rs2.next()){
+                                                                                codigo_ficha=rs2.getString(1);
+                                                                            }
+                                                                            
+                                                                            if(!codigo_ficha.equalsIgnoreCase("")){
+                                                                                st.executeUpdate("insert into dbo.empleado values('"+nombre+"','"+apellido+"','"+direccion+"','"+telefono+"',convert(datetime,'"+fechaString+"',5),'"+correo+"','"+dni+"','"+nacionalidad+"','"+codigo_funcion+"');");//sentencia para ingresar los datos
+                                                                                String codigo_empleado="";
+                                                                                ResultSet rs3=st.executeQuery("select cod_emp from dbo.EMPLEADO where dni='"+dni+"'");
+                                                                                if(rs3.next()){
+                                                                                    codigo_empleado=rs3.getString(1);
+                                                                                }
+                                                                                st.executeUpdate("insert into dbo.EMPLEADO_FICHA VALUES('"+codigo_empleado+"','"+codigo_ficha+"')");
                                                                                 JOptionPane.showMessageDialog(null, "Se ingresó correctamente!!");  
-                                                                                
                                                                             }else{
-                                                                                JOptionPane.showMessageDialog(null,"El codigo de estilo ya existe!!","Mensaje",2);
+                                                                                JOptionPane.showMessageDialog(null, "Ese codigo de estilo no existe!!","Mensaje",2);
                                                                             }
                                                                         }else{
                                                                             JOptionPane.showMessageDialog(null,"Complete todos los campos!!","Mensaje",3);
