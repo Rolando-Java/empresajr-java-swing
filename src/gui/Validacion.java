@@ -17,6 +17,26 @@ public class Validacion {
         
     }
     
+    static boolean avance_registrado_hoy(String cod_empleado,String fecha){
+        boolean band=false;
+        Connection cn=null;
+        Statement st=null;
+        try{
+            cn=Conection.getConnection();
+            st=cn.createStatement();
+            
+            ResultSet rs2=st.executeQuery("select * from dbo.AVANCE where convert(varchar,FECHA_INICIO,105)='"+fecha+"' and COD_EMP='"+cod_empleado+"'");
+                
+            if(rs2.next()){
+                band=true;
+            }
+            
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        return band;
+    }
+    
     static boolean existe_codigo_estilo(String codigo_estilo){
         boolean band=false;
         Connection cn=null;
@@ -26,6 +46,46 @@ public class Validacion {
             st=cn.createStatement();
             
             ResultSet rs2=st.executeQuery("select cod_ficha from dbo.FICHA_TECNICA where cod_estilo='"+codigo_estilo+"'");
+                
+            if(rs2.next()){
+                band=true;
+            }
+            
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        return band;
+    }
+    
+    static boolean esta_asignado(String cod_empleado,String cod_ficha){
+        boolean band=false;
+        Connection cn=null;
+        Statement st=null;
+        try{
+            cn=Conection.getConnection();
+            st=cn.createStatement();
+            
+            ResultSet rs2=st.executeQuery("select * from dbo.EMPLEADO_FICHA where COD_EMP='"+cod_empleado+"' and COD_FICHA='"+cod_ficha+"'");
+                
+            if(rs2.next()){
+                band=true;
+            }
+            
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        return band;
+    }
+    
+    static boolean existe_dni_empleado(String dni_empleado){
+        boolean band=false;
+        Connection cn=null;
+        Statement st=null;
+        try{
+            cn=Conection.getConnection();
+            st=cn.createStatement();
+            
+            ResultSet rs2=st.executeQuery("select cod_emp from dbo.EMPLEADO where dni='"+dni_empleado+"'");
                 
             if(rs2.next()){
                 band=true;

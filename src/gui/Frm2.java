@@ -5,17 +5,28 @@
  */
 package gui;
 
+import conn.Conection;
+import java.sql.*;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Rolando Andre
  */
 public class Frm2 extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Frm2
-     */
+    DefaultTableModel modelo1=new DefaultTableModel();
+    
+    static String codigo_estilo="";
+    static String StringFecha_inicio="";
+    static String StringFecha_fin="";
+    
     public Frm2() {
         initComponents();
+        label1.setText("Estos datos corresponden del "+StringFecha_inicio+" al "+StringFecha_fin);
+        tabla.setModel(modelo1);
+        cargar_tabla();
     }
 
     /**
@@ -27,7 +38,7 @@ public class Frm2 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        label1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -37,16 +48,21 @@ public class Frm2 extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Estos datos corresponden del XX de XX al XX de XX");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(151, 21, -1, -1));
+        label1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        getContentPane().add(label1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 410, 20));
 
         jScrollPane1.setViewportView(tabla);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 66, 591, 271));
 
         jMenu1.setText("Options");
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
 
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_TAB, 0));
         jMenuItem2.setText("Volver");
         jMenu1.add(jMenuItem2);
 
@@ -56,6 +72,49 @@ public class Frm2 extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cargar_tabla(){
+        modelo1.setRowCount(0);
+        modelo1.setColumnCount(0);
+        rellenar_tabla();
+    }
+    
+    private void rellenar_tabla(){
+        Connection cn=null;
+        Statement st=null;
+        try{
+            cn=Conection.getConnection();
+            st=cn.createStatement();
+            
+            ResultSet rs=st.executeQuery("select * from dbo.AVANCE where convert(varchar,FECHA_INICIO,105) between '"+StringFecha_inicio+"' and '"+StringFecha_fin+"'");
+            
+            ResultSetMetaData md=rs.getMetaData();
+            int cantidad_columnas=md.getColumnCount();
+            
+            for(int i=1;i<cantidad_columnas;i++){
+                modelo1.addColumn(md.getColumnLabel(i));
+            }
+            
+            while(rs.next()){
+                Object[] file=new Object[cantidad_columnas];
+                for(int i=0;i<cantidad_columnas;i++){
+                    file[i]=rs.getObject(i+1);
+                }
+                modelo1.addRow(file);
+            }
+            
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+    
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+        Frm3 obj=new Frm3();
+        obj.setVisible(true);
+        obj.setLocationRelativeTo(null);
+        obj.setResizable(false);
+        this.dispose();
+    }//GEN-LAST:event_jMenu1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -93,11 +152,11 @@ public class Frm2 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel label1;
     private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
 }
