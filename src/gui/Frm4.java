@@ -5,6 +5,10 @@
  */
 package gui;
 
+import conn.Conection;
+import java.sql.*;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Rolando Andre
@@ -61,6 +65,11 @@ public class Frm4 extends javax.swing.JFrame {
         getContentPane().add(txt_codigoEstilo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 41, 180, -1));
 
         btn_buscarPorcodigoEstilo.setText("Burcar por codigo de estilo");
+        btn_buscarPorcodigoEstilo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarPorcodigoEstiloActionPerformed(evt);
+            }
+        });
         getContentPane().add(btn_buscarPorcodigoEstilo, new org.netbeans.lib.awtextra.AbsoluteConstraints(228, 40, -1, -1));
 
         btn_imprimir.setText("Imprimir");
@@ -137,22 +146,48 @@ public class Frm4 extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Descripción"));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txt_estilo.setEditable(false);
         jPanel2.add(txt_estilo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 200, -1));
+
+        txt_version.setEditable(false);
         jPanel2.add(txt_version, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 200, -1));
+
+        txt_division.setEditable(false);
         jPanel2.add(txt_division, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 200, -1));
+
+        txt_descripcion.setEditable(false);
         jPanel2.add(txt_descripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 200, -1));
+
+        txt_destino.setEditable(false);
         jPanel2.add(txt_destino, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 200, -1));
+
+        txt_temporada.setEditable(false);
         jPanel2.add(txt_temporada, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 200, -1));
+
+        txt_telaPrincipal.setEditable(false);
         jPanel2.add(txt_telaPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 200, -1));
+
+        txt_proceso.setEditable(false);
         jPanel2.add(txt_proceso, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 200, -1));
+
+        txt_arte.setEditable(false);
         jPanel2.add(txt_arte, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 200, -1));
+
+        txt_etiqueta.setEditable(false);
         jPanel2.add(txt_etiqueta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 200, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(142, 89, 251, 330));
 
         jMenu1.setText("Option");
 
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_TAB, 0));
         jMenuItem1.setText("Volver");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
 
         jMenuBar1.add(jMenu1);
@@ -161,6 +196,50 @@ public class Frm4 extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_buscarPorcodigoEstiloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarPorcodigoEstiloActionPerformed
+        Connection cn=null;
+        Statement st=null;
+        try{
+            String codigo_estilo=txt_codigoEstilo.getText().toUpperCase().trim();
+            if(!codigo_estilo.equalsIgnoreCase("")){
+                if(Validacion.existe_codigo_estilo(codigo_estilo)){
+                    cn=Conection.getConnection();
+                    st=cn.createStatement();
+                    
+                    ResultSet rs=st.executeQuery("select COD_ESTILO,VERSION,DIVISION,DESCRIPCION,DESTINO,TEMPORADA,TELA_PRICNIPAL,PROCESO,ARTES,ETIQUETA from dbo.FICHA_TECNICA where cod_estilo='"+codigo_estilo+"'");
+                    
+                    while(rs.next()){
+                        txt_estilo.setText(rs.getString(1));
+                        txt_version.setText(rs.getString(2));
+                        txt_division.setText(rs.getString(3));
+                        txt_descripcion.setText(rs.getString(4));
+                        txt_destino.setText(rs.getString(5));
+                        txt_temporada.setText(rs.getString(6));
+                        txt_telaPrincipal.setText(rs.getString(7));
+                        txt_proceso.setText(rs.getString(8));
+                        txt_arte.setText(rs.getString(9));
+                        txt_etiqueta.setText(rs.getString(10));
+                    }
+                    
+                }else{
+                    JOptionPane.showMessageDialog(null,"Codigo de estilo no existe!!","Mensaje",3);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null,"Completa el campo!!","Mensaje",3);
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_btn_buscarPorcodigoEstiloActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        Frm5 obj=new Frm5();
+        obj.setVisible(true);
+        obj.setLocationRelativeTo(null);
+        obj.setResizable(false);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
