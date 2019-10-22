@@ -5,19 +5,63 @@
  */
 package gui;
 
+import conn.Conection;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Rolando Andre
  */
 public class Frm1 extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Frm1
-     */
+    DefaultTableModel modelo1=new DefaultTableModel();
+    
+    static String codigo_estilo="";
     public Frm1() {
         initComponents();
+        tabla.setModel(modelo1);
+        cargar_tabla();
     }
 
+    private void cargar_tabla(){
+        modelo1.setColumnCount(0);
+        modelo1.setRowCount(0);
+        llenar_tabla();
+    }
+    
+    private void llenar_tabla(){
+        Connection cn=null;
+        Statement st=null;
+        try{
+            cn=Conection.getConnection();
+            st=cn.createStatement();
+            
+            ResultSet rs=st.executeQuery("SELECT FT.COD_ESTILO,E.APELLIDO+','+E.NOMBRE AS EMPLEADO,A.PRENDAS_MAL AS \"PRENDAS BIEN ELABORADAS\",A.PRENDAS_MAL AS \"PRENDAS MAL ELABORADAS\",A.HORAS_TRAB AS \"HORAS TRABAJADAS\" FROM AVANCE A,EMPLEADO E,FICHA_TECNICA FT WHERE A.COD_EMP=E.COD_EMP AND A.COD_FICHA=FT.COD_FICHA AND FT.COD_ESTILO='"+codigo_estilo+"'");
+            
+            ResultSetMetaData md=rs.getMetaData();
+            int cantidad_columnas=md.getColumnCount();
+            
+            for(int i=1;i<cantidad_columnas;i++){
+                modelo1.addColumn(md.getColumnLabel(i));
+            }
+            
+            while(rs.next()){
+                Object[] fila=new Object[cantidad_columnas];
+                for(int i=0;i<cantidad_columnas;i++){
+                    fila[i]=rs.getObject(i+1);
+                }
+                modelo1.addRow(fila);
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,8 +82,8 @@ public class Frm1 extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Mostrar producción");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(242, 19, -1, 14));
+        jLabel1.setText("Producción");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, -1, 14));
 
         jScrollPane1.setViewportView(tabla);
 
@@ -48,6 +92,11 @@ public class Frm1 extends javax.swing.JFrame {
         jMenu1.setText("Options");
 
         jMenuItem1.setText("Volver");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
 
         jMenuBar1.add(jMenu1);
@@ -56,6 +105,14 @@ public class Frm1 extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        Frm3 obj=new Frm3();
+        obj.setVisible(true);
+        obj.setLocationRelativeTo(null);
+        obj.setResizable(false);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -33,7 +33,6 @@ public class Frm4 extends javax.swing.JFrame {
 
         txt_codigoEstilo = new javax.swing.JTextField();
         btn_buscarPorcodigoEstilo = new javax.swing.JButton();
-        btn_imprimir = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -45,6 +44,8 @@ public class Frm4 extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         txt_estilo = new javax.swing.JTextField();
         txt_version = new javax.swing.JTextField();
@@ -56,6 +57,8 @@ public class Frm4 extends javax.swing.JFrame {
         txt_proceso = new javax.swing.JTextField();
         txt_arte = new javax.swing.JTextField();
         txt_etiqueta = new javax.swing.JTextField();
+        txt_creacion = new javax.swing.JTextField();
+        txt_fin = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -71,9 +74,6 @@ public class Frm4 extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btn_buscarPorcodigoEstilo, new org.netbeans.lib.awtextra.AbsoluteConstraints(228, 40, -1, -1));
-
-        btn_imprimir.setText("Imprimir");
-        getContentPane().add(btn_imprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(158, 425, 100, 30));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Criterio"));
 
@@ -97,6 +97,10 @@ public class Frm4 extends javax.swing.JFrame {
 
         jLabel10.setText("Artes:");
 
+        jLabel11.setText("FechaCreación:");
+
+        jLabel12.setText("FechaFin");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -114,7 +118,15 @@ public class Frm4 extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(jLabel10)
                     .addComponent(jLabel1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel12)
+                .addGap(42, 42, 42))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel11)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,10 +151,14 @@ public class Frm4 extends javax.swing.JFrame {
                 .addComponent(jLabel10)
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1)
-                .addGap(9, 9, 9))
+                .addGap(16, 16, 16)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel12)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 90, -1, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 90, -1, 380));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Descripción"));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -177,7 +193,13 @@ public class Frm4 extends javax.swing.JFrame {
         txt_etiqueta.setEditable(false);
         jPanel2.add(txt_etiqueta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 200, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(142, 89, 251, 330));
+        txt_creacion.setEditable(false);
+        jPanel2.add(txt_creacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 200, -1));
+
+        txt_fin.setEditable(false);
+        jPanel2.add(txt_fin, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 200, -1));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(142, 89, 251, 380));
 
         jMenu1.setText("Option");
 
@@ -207,7 +229,7 @@ public class Frm4 extends javax.swing.JFrame {
                     cn=Conection.getConnection();
                     st=cn.createStatement();
                     
-                    ResultSet rs=st.executeQuery("select COD_ESTILO,VERSION,DIVISION,DESCRIPCION,DESTINO,TEMPORADA,TELA_PRICNIPAL,PROCESO,ARTES,ETIQUETA from dbo.FICHA_TECNICA where cod_estilo='"+codigo_estilo+"'");
+                    ResultSet rs=st.executeQuery("select COD_ESTILO,VERSION,DIVISION,DESCRIPCION,DESTINO,TEMPORADA,TELA_PRICNIPAL,PROCESO,ARTES,ETIQUETA,CONVERT(VARCHAR,FECHA_CREACION,105),CONVERT(VARCHAR,FECHA_FIN,105) from dbo.FICHA_TECNICA where cod_estilo='"+codigo_estilo+"'");
                     
                     while(rs.next()){
                         txt_estilo.setText(rs.getString(1));
@@ -220,8 +242,9 @@ public class Frm4 extends javax.swing.JFrame {
                         txt_proceso.setText(rs.getString(8));
                         txt_arte.setText(rs.getString(9));
                         txt_etiqueta.setText(rs.getString(10));
+                        txt_creacion.setText(rs.getString(11));
+                        txt_fin.setText(rs.getString(12)); 
                     }
-                    
                 }else{
                     JOptionPane.showMessageDialog(null,"Codigo de estilo no existe!!","Mensaje",3);
                 }
@@ -278,9 +301,10 @@ public class Frm4 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscarPorcodigoEstilo;
-    private javax.swing.JButton btn_imprimir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -296,11 +320,13 @@ public class Frm4 extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txt_arte;
     private javax.swing.JTextField txt_codigoEstilo;
+    private javax.swing.JTextField txt_creacion;
     private javax.swing.JTextField txt_descripcion;
     private javax.swing.JTextField txt_destino;
     private javax.swing.JTextField txt_division;
     private javax.swing.JTextField txt_estilo;
     private javax.swing.JTextField txt_etiqueta;
+    private javax.swing.JTextField txt_fin;
     private javax.swing.JTextField txt_proceso;
     private javax.swing.JTextField txt_telaPrincipal;
     private javax.swing.JTextField txt_temporada;

@@ -64,6 +64,11 @@ public class Frm2 extends javax.swing.JFrame {
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_TAB, 0));
         jMenuItem2.setText("Volver");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
@@ -86,7 +91,7 @@ public class Frm2 extends javax.swing.JFrame {
             cn=Conection.getConnection();
             st=cn.createStatement();
             
-            ResultSet rs=st.executeQuery("select * from dbo.AVANCE where convert(varchar,FECHA_INICIO,105) between '"+StringFecha_inicio+"' and '"+StringFecha_fin+"'");
+            ResultSet rs=st.executeQuery("SELECT FT.COD_ESTILO,E.APELLIDO+','+E.NOMBRE AS EMPLEADO,A.PRENDAS_MAL AS \"PRENDAS BIEN ELABORADAS\",A.PRENDAS_MAL AS \"PRENDAS MAL ELABORADAS\",A.HORAS_TRAB AS \"HORAS TRABAJADAS\" FROM AVANCE A,EMPLEADO E,FICHA_TECNICA FT WHERE A.COD_EMP=E.COD_EMP AND A.COD_FICHA=FT.COD_FICHA AND FT.COD_ESTILO='"+codigo_estilo+"' AND CONVERT(VARCHAR,A.FECHA_INICIO,105) BETWEEN '"+this.StringFecha_inicio+"' AND '"+this.StringFecha_fin+"'");
             
             ResultSetMetaData md=rs.getMetaData();
             int cantidad_columnas=md.getColumnCount();
@@ -115,6 +120,14 @@ public class Frm2 extends javax.swing.JFrame {
         obj.setResizable(false);
         this.dispose();
     }//GEN-LAST:event_jMenu1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        Frm3 obj=new Frm3();
+        obj.setVisible(true);
+        obj.setLocationRelativeTo(null);
+        obj.setResizable(false);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments

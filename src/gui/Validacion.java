@@ -17,7 +17,58 @@ public class Validacion {
         
     }
     
-    static boolean avance_registrado_hoy(String cod_empleado,String fecha){
+    static boolean ficha_activa(String cod_ficha,String dni){
+        boolean band=false;
+        Connection cn=null;
+        Statement st=null;
+        try{
+            String estado="inactivo";
+            boolean actualizar_estado=false;
+            cn=Conection.getConnection();
+            st=cn.createStatement();
+            
+            ResultSet rs=st.executeQuery("SELECT F.COD_FICHA FROM FICHA_TECNICA F WHERE F.ESTADO='ACTIVO' AND F.COD_FICHA='"+cod_ficha+"'");
+            
+            if(rs.next()){
+                estado="activo";
+            }
+            
+            if(estado.equalsIgnoreCase("activo")){
+                ResultSet rs2=st.executeQuery("SELECT F.COD_FICHA FROM FICHA_TECNICA F WHERE CONVERT(VARCHAR,F.FECHA_FIN,105)=CONVERT(VARCHAR,GETDATE(),105) AND F.COD_FICHA='"+cod_ficha+"'");
+
+                if(rs2.next()){
+                    actualizar_estado=true;
+                }
+                
+                if(actualizar_estado){
+                    st.executeUpdate("UPDATE FICHA_TECNICA SET ESTADO='INACTIVO' WHERE COD_FICHA='"+cod_ficha+"'");
+                    band=false;
+                }else{
+                    boolean existencia_empleado=false;
+                    
+                    ResultSet rs3=st.executeQuery("select e.COD_EMP from empleado_ficha ef,empleado e where ef.COD_EMP=e.COD_EMP and e.DNI='"+dni+"'");
+                    
+                    if(rs3.next()){
+                        existencia_empleado=true;
+                    }
+                    
+                    if(existencia_empleado){
+                        band=true;
+                    }else{
+                        band=false;
+                    }
+                }
+                
+            }else{
+                band=false;
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        return band;
+    }
+    
+    static boolean avance_registrado_hoy(String cod_empleado,String fecha,String cod_ficha){
         boolean band=false;
         Connection cn=null;
         Statement st=null;
@@ -25,7 +76,7 @@ public class Validacion {
             cn=Conection.getConnection();
             st=cn.createStatement();
             
-            ResultSet rs2=st.executeQuery("select * from dbo.AVANCE where convert(varchar,FECHA_INICIO,105)='"+fecha+"' and COD_EMP='"+cod_empleado+"'");
+            ResultSet rs2=st.executeQuery("select A.COD_AVANCE from DBO.AVANCE A where convert(varchar,A.FECHA_INICIO,105)='"+fecha+"' and A.COD_EMP='"+cod_empleado+"' AND A.COD_FICHA='"+cod_ficha+"'");
                 
             if(rs2.next()){
                 band=true;

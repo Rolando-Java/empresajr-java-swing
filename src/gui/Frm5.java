@@ -54,7 +54,7 @@ public class Frm5 extends javax.swing.JFrame {
         txt_proceso = new javax.swing.JTextField();
         txt_arte = new javax.swing.JTextField();
         txt_etiqueta = new javax.swing.JTextField();
-        txt_fechaCreacion = new com.toedter.calendar.JDateChooser();
+        txt_fechaFin = new com.toedter.calendar.JDateChooser();
         btnGrabar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
         txt_descripcion = new javax.swing.JTextField();
@@ -100,7 +100,7 @@ public class Frm5 extends javax.swing.JFrame {
         jLabel11.setText("Etiqueta:");
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 339, -1, 20));
 
-        jLabel12.setText("Fecha de creación:");
+        jLabel12.setText("Fecha de fin:");
         getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 369, -1, 20));
         getContentPane().add(txt_division, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, 200, -1));
 
@@ -123,7 +123,7 @@ public class Frm5 extends javax.swing.JFrame {
         getContentPane().add(txt_proceso, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 283, 200, -1));
         getContentPane().add(txt_arte, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 309, 200, -1));
         getContentPane().add(txt_etiqueta, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 339, 200, -1));
-        getContentPane().add(txt_fechaCreacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 369, 200, -1));
+        getContentPane().add(txt_fechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 369, 200, -1));
 
         btnGrabar.setText("Grabar");
         btnGrabar.addActionListener(new java.awt.event.ActionListener() {
@@ -214,7 +214,7 @@ public class Frm5 extends javax.swing.JFrame {
                                                                 if(!etiqueta.equalsIgnoreCase("")){
                                                                     if(!Validacion.existencia_numero(etiqueta)){
                                                                         String fechaString="";
-                                                                        Date fecha=txt_fechaCreacion.getDate();
+                                                                        Date fecha=txt_fechaFin.getDate();
                                                                         if(fecha!=null){
                                                                             int input=JOptionPane.showConfirmDialog(null, "Estás seguro?","Escoger una opción",2,3);
                                                                             if(input==0){
@@ -224,7 +224,7 @@ public class Frm5 extends javax.swing.JFrame {
                                                                                 cn=Conection.getConnection();
                                                                                 st=cn.createStatement();
 
-                                                                                st.executeUpdate("insert into dbo.FICHA_TECNICA(COD_ESTILO,VERSION,DIVISION,DESCRIPCION,DESTINO,TEMPORADA,TELA_PRICNIPAL,PROCESO,ARTES,ETIQUETA,FECHA_CREACION) VALUES('"+codigo_estilo+"','"+version+"','"+division+"','"+descripcion+"','"+destino+"','"+temporada+"','"+tela_principal+"','"+proceso+"','"+artes+"','"+etiqueta+"',convert(datetime,'"+fechaString+"',5))");
+                                                                                st.executeUpdate("insert into dbo.FICHA_TECNICA(COD_ESTILO,VERSION,DIVISION,DESCRIPCION,DESTINO,TEMPORADA,TELA_PRICNIPAL,PROCESO,ARTES,ETIQUETA,FECHA_CREACION,ESTADO,FECHA_FIN) VALUES('"+codigo_estilo+"','"+version+"','"+division+"','"+descripcion+"','"+destino+"','"+temporada+"','"+tela_principal+"','"+proceso+"','"+artes+"','"+etiqueta+"',getDate(),'ACTIVO',convert(datetime,'"+fechaString+"',5))");
 
                                                                                 JOptionPane.showMessageDialog(null, "Se ingresó correctamente!!");     
                                                                             }
@@ -292,7 +292,7 @@ public class Frm5 extends javax.swing.JFrame {
         txt_proceso.setText("");
         txt_arte.setText("");
         txt_etiqueta.setText("");
-        txt_fechaCreacion.setDate(null);
+        txt_fechaFin.setDate(null);
     }//GEN-LAST:event_btn_limpiarActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -363,7 +363,7 @@ public class Frm5 extends javax.swing.JFrame {
     private javax.swing.JTextField txt_division;
     private javax.swing.JTextField txt_estilo;
     private javax.swing.JTextField txt_etiqueta;
-    private com.toedter.calendar.JDateChooser txt_fechaCreacion;
+    private com.toedter.calendar.JDateChooser txt_fechaFin;
     private javax.swing.JTextField txt_proceso;
     private javax.swing.JTextField txt_telaPrincipal;
     private javax.swing.JTextField txt_temporada;

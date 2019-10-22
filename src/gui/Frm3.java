@@ -177,6 +177,11 @@ public class Frm3 extends javax.swing.JFrame {
         getContentPane().add(txt_codigoEstilo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 360, 100, -1));
 
         btn_mostrarProduccion.setText("Mostrar Producción");
+        btn_mostrarProduccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_mostrarProduccionActionPerformed(evt);
+            }
+        });
         getContentPane().add(btn_mostrarProduccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 390, 150, 30));
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -244,19 +249,22 @@ public class Frm3 extends javax.swing.JFrame {
                                     }
                                     
                                     if(Validacion.esta_asignado(codigo_empleado, codigo_ficha)){
-                                        if(!Validacion.avance_registrado_hoy(codigo_empleado,new SimpleDateFormat("dd-MM-yyyy").format(fecha))){
-                                            int input=JOptionPane.showConfirmDialog(null, "Estás seguro?","Escoger una opción",2,3);
-                                            if(input==0){
-                                                st.executeUpdate("insert into dbo.AVANCE VALUES(convert(datetime,'"+fechaString+"',5),'"+prendas_bien+"','"+prendas_mal+"','"+horas_trab+"','"+codigo_empleado+"','"+codigo_ficha+"')");
-                                                JOptionPane.showMessageDialog(null,"Se ingresó correctamente!!");
+                                        if(Validacion.ficha_activa(codigo_ficha,dni_empleado)){
+                                            if(!Validacion.avance_registrado_hoy(codigo_empleado,new SimpleDateFormat("dd-MM-yyyy").format(fecha),codigo_ficha)){
+                                                int input=JOptionPane.showConfirmDialog(null, "Estás seguro?","Escoger una opción",2,3);
+                                                if(input==0){
+                                                    st.executeUpdate("insert into dbo.AVANCE VALUES(convert(datetime,'"+fechaString+"',5),'"+prendas_bien+"','"+prendas_mal+"','"+horas_trab+"','"+codigo_empleado+"','"+codigo_ficha+"')");
+                                                    JOptionPane.showMessageDialog(null,"Se ingresó correctamente!!");
+                                                }
+                                            }else{
+                                                JOptionPane.showMessageDialog(null,"Ya se ha registrado el avance de ese empleado en esa fecha!!","Mensaje",2);
                                             }
                                         }else{
-                                            JOptionPane.showMessageDialog(null,"Ya se ha registrado el avance de ese empleado en esa fecha!!","Mensaje",2);
-                                        }
+                                            JOptionPane.showMessageDialog(null,"Esa ficha técnica ya está consumada!!","Mensaje",2);
+                                        }  
                                     }else{
-                                        JOptionPane.showMessageDialog(null,"El empleado no esta asignado a esa ficha tecnica actualmente!!","Mensaje",2);
+                                        JOptionPane.showMessageDialog(null,"El empleado no esta asignado a esa ficha técnica actualmente!!","Mensaje",2);
                                     }
-                                    
                                 }else{
                                     JOptionPane.showMessageDialog(null,"Complete todos los campos!!","Mensaje",3);
                                 }
@@ -332,6 +340,29 @@ public class Frm3 extends javax.swing.JFrame {
         obj.setResizable(false);
         this.dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void btn_mostrarProduccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_mostrarProduccionActionPerformed
+        try{
+            String codigo_estilo=txt_codigoEstilo3.getText().toUpperCase().trim();
+            if(!codigo_estilo.equalsIgnoreCase("")){
+                if(Validacion.existe_codigo_estilo(codigo_estilo)){
+                    Frm1.codigo_estilo=codigo_estilo;
+                    Frm1 obj=new Frm1();
+                    obj.setVisible(true);
+                    obj.setLocationRelativeTo(null);
+                    obj.setResizable(false);
+                    this.dispose();
+                }else{
+                    JOptionPane.showMessageDialog(null,"Codigo de estilo no existe!!","Mensaje",3);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null,"Complete el campo!!","Mensaje",3);
+            }
+            
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_btn_mostrarProduccionActionPerformed
 
     /**
      * @param args the command line arguments

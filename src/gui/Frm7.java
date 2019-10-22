@@ -206,7 +206,7 @@ public class Frm7 extends javax.swing.JFrame {
                                             if(fecha!=null){
                                                 SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yy");
                                                 fechaString=sdf.format(fecha);
-                                                String correo=txt_correo.getText().trim();
+                                                String correo=txt_correo.getText().toLowerCase().trim();
                                                 if(!correo.equalsIgnoreCase("")){
                                                     if(Validacion.existencia_arroba(correo)){
                                                         String dni=txt_dni.getText().trim();
@@ -234,14 +234,18 @@ public class Frm7 extends javax.swing.JFrame {
                                                                             }
                                                                             
                                                                             if(!codigo_ficha.equalsIgnoreCase("")){
-                                                                                st.executeUpdate("insert into dbo.empleado values('"+nombre+"','"+apellido+"','"+direccion+"','"+telefono+"',convert(datetime,'"+fechaString+"',5),'"+correo+"','"+dni+"','"+nacionalidad+"','"+codigo_funcion+"');");//sentencia para ingresar los datos
-                                                                                String codigo_empleado="";
-                                                                                ResultSet rs3=st.executeQuery("select cod_emp from dbo.EMPLEADO where dni='"+dni+"'");
-                                                                                if(rs3.next()){
-                                                                                    codigo_empleado=rs3.getString(1);
-                                                                                }
-                                                                                st.executeUpdate("insert into dbo.EMPLEADO_FICHA VALUES('"+codigo_empleado+"','"+codigo_ficha+"')");
-                                                                                JOptionPane.showMessageDialog(null, "Se ingresó correctamente!!");  
+                                                                                if(!Validacion.ficha_activa(codigo_ficha,dni)){
+                                                                                    st.executeUpdate("insert into dbo.empleado values('"+nombre+"','"+apellido+"','"+direccion+"','"+telefono+"',convert(datetime,'"+fechaString+"',5),'"+correo+"','"+dni+"','"+nacionalidad+"','"+codigo_funcion+"');");
+                                                                                    String codigo_empleado="";
+                                                                                    ResultSet rs3=st.executeQuery("select cod_emp from dbo.EMPLEADO where dni='"+dni+"'");
+                                                                                    if(rs3.next()){
+                                                                                        codigo_empleado=rs3.getString(1);
+                                                                                    }
+                                                                                    st.executeUpdate("insert into dbo.EMPLEADO_FICHA VALUES('"+codigo_empleado+"','"+codigo_ficha+"')");
+                                                                                    JOptionPane.showMessageDialog(null, "Se ingresó correctamente!!");  
+                                                                                }else{
+                                                                                    JOptionPane.showMessageDialog(null,"La ficha técnica en la que fue asignado anteriormente no está consumada!!","Mensaje",2);
+                                                                                }  
                                                                             }else{
                                                                                 JOptionPane.showMessageDialog(null, "Ese codigo de estilo no existe!!","Mensaje",2);
                                                                             }

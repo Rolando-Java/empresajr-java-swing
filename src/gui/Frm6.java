@@ -288,6 +288,7 @@ public class Frm6 extends javax.swing.JFrame {
                             }
                             modelo1.addRow(fila);
                         }
+                        this.dni=null;
                         JOptionPane.showMessageDialog(null,"Búsqueda exitosa!!");
                     }else{
                         JOptionPane.showMessageDialog(null,"No hay datos que mostrar!!");
@@ -327,7 +328,7 @@ public class Frm6 extends javax.swing.JFrame {
                                                     if(fecha!=null){
                                                         SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yy");
                                                         fechaString=sdf.format(fecha);
-                                                        String correo=txt_correo.getText().toUpperCase().trim();
+                                                        String correo=txt_correo.getText().toLowerCase().trim();
                                                         if(!correo.equalsIgnoreCase("")){
                                                             if(Validacion.existencia_arroba(correo)){
                                                                 String dni=txt_dni.getText().trim();
