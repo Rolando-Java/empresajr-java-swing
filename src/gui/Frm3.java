@@ -48,11 +48,11 @@ public class Frm3 extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        txt_dni = new javax.swing.JTextField();
         txt_fecha = new com.toedter.calendar.JDateChooser();
         spin1 = new javax.swing.JSpinner();
         spin2 = new javax.swing.JSpinner();
         spin3 = new javax.swing.JSpinner();
+        cbo_empleado = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -66,6 +66,7 @@ public class Frm3 extends javax.swing.JFrame {
         txt_fechaInicio = new com.toedter.calendar.JDateChooser();
         jLabel13 = new javax.swing.JLabel();
         txt_fechaFin = new com.toedter.calendar.JDateChooser();
+        btn_cargar_empleado = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -91,7 +92,7 @@ public class Frm3 extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Criterio"));
 
-        jLabel4.setText("Dni_empleado:");
+        jLabel4.setText("Empleado:");
 
         jLabel5.setText("Fecha:");
 
@@ -135,7 +136,6 @@ public class Frm3 extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Descripción"));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel2.add(txt_dni, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 180, -1));
 
         txt_fecha.setDateFormatString("dd-MM-yyyy");
         jPanel2.add(txt_fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 180, -1));
@@ -148,6 +148,9 @@ public class Frm3 extends javax.swing.JFrame {
 
         spin3.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
         jPanel2.add(spin3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 60, -1));
+
+        cbo_empleado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "......................................" }));
+        jPanel2.add(cbo_empleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 180, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(253, 122, 230, 177));
 
@@ -174,7 +177,7 @@ public class Frm3 extends javax.swing.JFrame {
         jLabel12.setText("Código de estilo:");
         getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 360, -1, -1));
         getContentPane().add(txt_codigoEstilo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 360, 100, -1));
-        getContentPane().add(txt_codigoEstilo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 360, 100, -1));
+        getContentPane().add(txt_codigoEstilo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 360, 110, -1));
 
         btn_mostrarProduccion.setText("Mostrar Producción");
         btn_mostrarProduccion.addActionListener(new java.awt.event.ActionListener() {
@@ -186,11 +189,19 @@ public class Frm3 extends javax.swing.JFrame {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 330, 10, 120));
-        getContentPane().add(txt_fechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 390, 100, -1));
+        getContentPane().add(txt_fechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 390, 130, -1));
 
         jLabel13.setText("Fecha de fin:");
         getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 434, -1, -1));
-        getContentPane().add(txt_fechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 428, -1, -1));
+        getContentPane().add(txt_fechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 428, 130, -1));
+
+        btn_cargar_empleado.setText("Cargar Empleados");
+        btn_cargar_empleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cargar_empleadoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_cargar_empleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 70, 150, -1));
 
         jMenu1.setText("Options");
 
@@ -217,8 +228,17 @@ public class Frm3 extends javax.swing.JFrame {
             String codigo_estilo=txt_codigoEstilo.getText().toUpperCase().trim();
             if(!codigo_estilo.equalsIgnoreCase("")){
                 if(Validacion.existe_codigo_estilo(codigo_estilo)){
-                    String dni_empleado=txt_dni.getText().toUpperCase().trim();
-                    if(!dni_empleado.equalsIgnoreCase("")){
+                    String nombre_empleado=cbo_empleado.getSelectedItem().toString();
+                    if(!nombre_empleado.equalsIgnoreCase("................")){
+                        String dni_empleado="";
+                        cn=Conection.getConnection();
+                        st=cn.createStatement();
+                        
+                        ResultSet rs4=st.executeQuery("SELECT E.DNI FROM EMPLEADO E WHERE E.APELLIDO+', '+E.NOMBRE='"+nombre_empleado+"'");
+                        
+                        if(rs4.next()){
+                            dni_empleado=rs4.getString(1);
+                        }
                         if(Validacion.existe_dni_empleado(dni_empleado)){
                             if(!Validacion.existencia_letras(dni_empleado)){
                                 String fechaString=null;
@@ -229,9 +249,6 @@ public class Frm3 extends javax.swing.JFrame {
                                     String prendas_bien=spin1.getValue().toString();
                                     String prendas_mal=spin2.getValue().toString();
                                     String horas_trab=spin3.getValue().toString();
-
-                                    cn=Conection.getConnection();
-                                    st=cn.createStatement();
                                     
                                     boolean band=false;
                                     String codigo_empleado="",codigo_ficha="";
@@ -259,9 +276,7 @@ public class Frm3 extends javax.swing.JFrame {
                                             }else{
                                                 JOptionPane.showMessageDialog(null,"Ya se ha registrado el avance de ese empleado en esa fecha!!","Mensaje",2);
                                             }
-                                        }else{
-                                            JOptionPane.showMessageDialog(null,"Esa ficha técnica ya está consumada!!","Mensaje",2);
-                                        }  
+                                        } 
                                     }else{
                                         JOptionPane.showMessageDialog(null,"El empleado no esta asignado a esa ficha técnica actualmente!!","Mensaje",2);
                                     }
@@ -298,24 +313,29 @@ public class Frm3 extends javax.swing.JFrame {
                     String StringFecha_inicio="";
                     Date fecha_inicio=txt_fechaInicio.getDate();
                     if(fecha_inicio!=null){
-                        SimpleDateFormat sdf_uno=new SimpleDateFormat("dd-MM-yyyy");
-                        StringFecha_inicio=sdf_uno.format(fecha_inicio);
                         String StringFecha_fin="";
                         Date fecha_fin=txt_fechaFin.getDate();
                         if(fecha_fin!=null){
-                           SimpleDateFormat sdf_dos=new SimpleDateFormat("dd-MM-yyyy");
-                           StringFecha_fin=sdf_dos.format(fecha_fin);
-                           
-                           
-                           Frm2.codigo_estilo=codigo_estilo;
-                           Frm2.StringFecha_fin=StringFecha_fin;
-                           Frm2.StringFecha_inicio=StringFecha_inicio;
-                           
-                           Frm2 obj=new Frm2();
-                           obj.setVisible(true);
-                           obj.setLocationRelativeTo(null);
-                           obj.setResizable(false);
-                           this.dispose();
+                            if(Validacion.fechas_validas(fecha_inicio, fecha_fin)){
+                                SimpleDateFormat sdf_uno=new SimpleDateFormat("dd-MM-yyyy");
+                                StringFecha_inicio=sdf_uno.format(fecha_inicio);
+
+                               SimpleDateFormat sdf_dos=new SimpleDateFormat("dd-MM-yyyy");
+                               StringFecha_fin=sdf_dos.format(fecha_fin);
+
+
+                               Frm2.codigo_estilo=codigo_estilo;
+                               Frm2.StringFecha_fin=StringFecha_fin;
+                               Frm2.StringFecha_inicio=StringFecha_inicio;
+
+                               Frm2 obj=new Frm2();
+                               obj.setVisible(true);
+                               obj.setLocationRelativeTo(null);
+                               obj.setResizable(false);
+                               this.dispose();
+                            }else{
+                                JOptionPane.showMessageDialog(null,"La fecha de inico debe ser anterior a la fecha de fin!!","Mensaje",3);
+                            }
                         }else{
                             JOptionPane.showMessageDialog(null,"Complete todos los campos!!","Mensaje",3);
                         }
@@ -364,6 +384,44 @@ public class Frm3 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_mostrarProduccionActionPerformed
 
+    private void btn_cargar_empleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cargar_empleadoActionPerformed
+        Connection cn=null;
+        Statement st=null;
+        try{
+            String codigo_estilo=txt_codigoEstilo.getText().toUpperCase().trim();
+            if(!codigo_estilo.equalsIgnoreCase("")){
+                if(Validacion.existe_codigo_estilo(codigo_estilo)){
+                    cn=Conection.getConnection();
+                    st=cn.createStatement();
+                    cbo_empleado.removeAllItems();
+                    boolean cantidad=false;
+                    
+                    ResultSet rs=st.executeQuery("SELECT E.APELLIDO+', '+E.NOMBRE FROM DBO.EMPLEADO E,DBO.EMPLEADO_FICHA EF,DBO.FICHA_TECNICA FT WHERE E.COD_EMP=EF.COD_EMP AND FT.COD_FICHA=EF.COD_FICHA AND FT.COD_ESTILO='"+codigo_estilo+"'");
+                    
+                    
+                    cbo_empleado.addItem("......................................");
+                    while(rs.next()){
+                        cbo_empleado.addItem(rs.getString(1));
+                        cantidad=true;
+                    }
+                    
+                    if(cantidad){
+                        JOptionPane.showMessageDialog(null,"Se cargó correctamente!!");
+                    }else{
+                        JOptionPane.showMessageDialog(null,"No existen empleados asignados a esta ficha ténica!!");
+                    }
+                    
+                }else{
+                    JOptionPane.showMessageDialog(null,"Codigo de estilo no existe!!","Mensaje",3);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null,"Complete el campo!!","Mensaje",3);
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_btn_cargar_empleadoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -400,9 +458,11 @@ public class Frm3 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_cargar_empleado;
     private javax.swing.JButton btn_grabar;
     private javax.swing.JButton btn_mostrar;
     private javax.swing.JButton btn_mostrarProduccion;
+    private javax.swing.JComboBox cbo_empleado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -428,7 +488,6 @@ public class Frm3 extends javax.swing.JFrame {
     private javax.swing.JTextField txt_codigoEstilo;
     private javax.swing.JTextField txt_codigoEstilo2;
     private javax.swing.JTextField txt_codigoEstilo3;
-    private javax.swing.JTextField txt_dni;
     private com.toedter.calendar.JDateChooser txt_fecha;
     private com.toedter.calendar.JDateChooser txt_fechaFin;
     private com.toedter.calendar.JDateChooser txt_fechaInicio;

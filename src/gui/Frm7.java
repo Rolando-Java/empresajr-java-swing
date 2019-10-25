@@ -51,9 +51,7 @@ public class Frm7 extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         txt_correo = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        txt_codigoEstilo = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         txt_nacionalidad = new javax.swing.JTextField();
         txt_fechaNacimiento = new com.toedter.calendar.JDateChooser();
         btnGrabar = new javax.swing.JButton();
@@ -106,13 +104,9 @@ public class Frm7 extends javax.swing.JFrame {
 
         jLabel9.setText("Dni:");
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, -1, -1));
-        getContentPane().add(txt_codigoEstilo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 340, 173, -1));
 
         jLabel10.setText("Nacionalidad:");
         getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, -1, -1));
-
-        jLabel11.setText("Codigo de estilo:");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 340, -1, -1));
         getContentPane().add(txt_nacionalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 310, 173, -1));
         getContentPane().add(txt_fechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 224, 173, -1));
 
@@ -212,51 +206,30 @@ public class Frm7 extends javax.swing.JFrame {
                                                         String dni=txt_dni.getText().trim();
                                                         if(!dni.equalsIgnoreCase("")){
                                                             if(!Validacion.existencia_letras(dni)){
-                                                                String nacionalidad=txt_nacionalidad.getText().toUpperCase().trim();//debe ser un combo
-                                                                if(!nacionalidad.equalsIgnoreCase("")){
-                                                                    if(!Validacion.existencia_numero(nacionalidad)){
-                                                                        String codigo_estilo=txt_codigoEstilo.getText().toUpperCase().trim();
-                                                                        if(!codigo_estilo.equalsIgnoreCase("")){
-                                                                            String codigo_funcion="",codigo_ficha="";
+                                                                if(!Validacion.repite_empleado(dni)){
+                                                                    String nacionalidad=txt_nacionalidad.getText().toUpperCase().trim();//debe ser un combo
+                                                                    if(!nacionalidad.equalsIgnoreCase("")){
+                                                                        if(!Validacion.existencia_numero(nacionalidad)){
+                                                                            String codigo_funcion="";
                                                                             cn=Conection.getConnection();
                                                                             st=cn.createStatement();
-                                                                            
+
                                                                             ResultSet rs=st.executeQuery("select cod_funcion from dbo.FUNCION where descripcion='"+funcion+"'");
-                                                                            
+
                                                                             if(rs.next()){
                                                                                 codigo_funcion=rs.getString(1);
                                                                             }
-                                                                                
-                                                                            ResultSet rs2=st.executeQuery("select cod_ficha from ficha_tecnica where cod_estilo='"+codigo_estilo+"'");
-                                                                            
-                                                                            if(rs2.next()){
-                                                                                codigo_ficha=rs2.getString(1);
-                                                                            }
-                                                                            
-                                                                            if(!codigo_ficha.equalsIgnoreCase("")){
-                                                                                if(!Validacion.ficha_activa(codigo_ficha,dni)){
-                                                                                    st.executeUpdate("insert into dbo.empleado values('"+nombre+"','"+apellido+"','"+direccion+"','"+telefono+"',convert(datetime,'"+fechaString+"',5),'"+correo+"','"+dni+"','"+nacionalidad+"','"+codigo_funcion+"');");
-                                                                                    String codigo_empleado="";
-                                                                                    ResultSet rs3=st.executeQuery("select cod_emp from dbo.EMPLEADO where dni='"+dni+"'");
-                                                                                    if(rs3.next()){
-                                                                                        codigo_empleado=rs3.getString(1);
-                                                                                    }
-                                                                                    st.executeUpdate("insert into dbo.EMPLEADO_FICHA VALUES('"+codigo_empleado+"','"+codigo_ficha+"')");
-                                                                                    JOptionPane.showMessageDialog(null, "Se ingresó correctamente!!");  
-                                                                                }else{
-                                                                                    JOptionPane.showMessageDialog(null,"La ficha técnica en la que fue asignado anteriormente no está consumada!!","Mensaje",2);
-                                                                                }  
-                                                                            }else{
-                                                                                JOptionPane.showMessageDialog(null, "Ese codigo de estilo no existe!!","Mensaje",2);
-                                                                            }
+
+                                                                            st.executeUpdate("insert into dbo.empleado values('"+nombre+"','"+apellido+"','"+direccion+"','"+telefono+"',convert(datetime,'"+fechaString+"',5),'"+correo+"','"+dni+"','"+nacionalidad+"','"+codigo_funcion+"');");
+
+                                                                            JOptionPane.showMessageDialog(null, "Se ingresó correctamente!!");  
+
                                                                         }else{
-                                                                            JOptionPane.showMessageDialog(null,"Complete todos los campos!!","Mensaje",3);
+                                                                            JOptionPane.showMessageDialog(null,"La nacionalidad no debe contener números!!","Mensaje",2);
                                                                         }
                                                                     }else{
-                                                                        JOptionPane.showMessageDialog(null,"La nacionalidad no debe contener números!!","Mensaje",2);
+                                                                        JOptionPane.showMessageDialog(null,"Complete todos los campos!!","Mensaje",3);
                                                                     }
-                                                                }else{
-                                                                    JOptionPane.showMessageDialog(null,"Complete todos los campos!!","Mensaje",3);
                                                                 }
                                                             }else{
                                                                 JOptionPane.showMessageDialog(null,"El dni no debe contener letras!!","Mensaje",2);
@@ -312,7 +285,6 @@ public class Frm7 extends javax.swing.JFrame {
         txt_correo.setText("");
         txt_dni.setText("");
         txt_nacionalidad.setText("");
-        txt_codigoEstilo.setText("");
     }
     
     private void btnMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarActionPerformed
@@ -377,7 +349,6 @@ public class Frm7 extends javax.swing.JFrame {
     private javax.swing.JComboBox cbo_funcion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -390,7 +361,6 @@ public class Frm7 extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JTextField txt_apellido;
-    private javax.swing.JTextField txt_codigoEstilo;
     private javax.swing.JTextField txt_correo;
     private javax.swing.JTextField txt_direccion;
     private javax.swing.JTextField txt_dni;

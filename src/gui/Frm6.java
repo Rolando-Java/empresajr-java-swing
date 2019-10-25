@@ -270,7 +270,7 @@ public class Frm6 extends javax.swing.JFrame {
                     }
                     
                     if(cantidad_filas>0){
-                        ResultSet rs=st.executeQuery("select apellido as APELLIDO,nombre as NOMBRE,direccion as DIRECCION,telefono as TELEFONO,U.DESCRIPCION as FUNCION,fecha_nac as FECHA_NAC,correo as CORREO,dni as DNI,nacionalidad as NACIONALIDAD from dbo.FICHA_TECNICA F,dbo.EMPLEADO_FICHA EF,dbo.EMPLEADO E,dbo.FUNCION U where cod_estilo='C001' and F.COD_FICHA=EF.COD_FICHA and E.COD_EMP=EF.COD_EMP and U.COD_FUNCION=E.COD_FUNCION order by E.APELLIDO asc");
+                        ResultSet rs=st.executeQuery("select apellido as APELLIDO,nombre as NOMBRE,direccion as DIRECCION,telefono as TELEFONO,U.DESCRIPCION as FUNCION,fecha_nac as FECHA_NAC,correo as CORREO,dni as DNI,nacionalidad as NACIONALIDAD from dbo.FICHA_TECNICA F,dbo.EMPLEADO_FICHA EF,dbo.EMPLEADO E,dbo.FUNCION U where cod_estilo='"+codigo_estilo+"' and F.COD_FICHA=EF.COD_FICHA and E.COD_EMP=EF.COD_EMP and U.COD_FUNCION=E.COD_FUNCION order by E.APELLIDO asc");
 
                         modelo1.setColumnCount(0);
                         modelo1.setRowCount(0);

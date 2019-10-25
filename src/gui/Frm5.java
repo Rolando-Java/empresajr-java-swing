@@ -6,10 +6,15 @@
 package gui;
 
 import conn.Conection;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,8 +25,97 @@ public class Frm5 extends javax.swing.JFrame {
     /**
      * Creates new form Frm5
      */
+    private boolean seleccion=false,seleccion2=false;
+    private String apellido_empleado;
+    private String nombre_empleado;
+    private String codigo_estilo;
+    
+    DefaultTableModel modelo1=new DefaultTableModel();
+    DefaultTableModel modelo2=new DefaultTableModel();
+            
     public Frm5() {
         initComponents();
+        tabla.setModel(modelo1);
+        tabla2.setModel(modelo2);
+        popupTable();
+        cargar_fichas();
+        cargarTabla_uno();
+        cargarTabla_dos();
+    }
+    
+    private void cargarTabla_dos(){
+        try{
+            Connection cn=Conection.getConnection();
+            Statement st=cn.createStatement();
+            
+            ResultSet rs=st.executeQuery("SELECT E.APELLIDO,E.NOMBRE,FT.COD_ESTILO AS \"CODIGO ESTILO\" FROM DBO.EMPLEADO E,DBO.EMPLEADO_FICHA EF,DBO.FICHA_TECNICA FT WHERE E.COD_EMP=EF.COD_EMP AND FT.COD_FICHA=EF.COD_FICHA AND FT.ESTADO='ACTIVO'");
+            
+            modelo2.setColumnCount(0);
+            modelo2.setRowCount(0);
+            
+            ResultSetMetaData md=rs.getMetaData();
+            int num_column=md.getColumnCount();
+            
+            for(int i=1;i<=num_column;i++){
+                modelo2.addColumn(md.getColumnLabel(i));
+            }
+            
+            while(rs.next()){
+                Object[] fila=new Object[num_column];
+                for(int i=0;i<num_column;i++){
+                    fila[i]=rs.getObject(i+1);
+                }
+                modelo2.addRow(fila);
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null,ex.getMessage());
+        }
+    }
+    
+    private void cargarTabla_uno(){
+        try{
+            Connection cn=Conection.getConnection();
+            Statement st=cn.createStatement();
+            
+            ResultSet rs=st.executeQuery("SELECT E.APELLIDO,E.NOMBRE,F.DESCRIPCION FROM DBO.EMPLEADO E,DBO.FUNCION F WHERE E.COD_FUNCION=F.COD_FUNCION AND E.COD_EMP IN (SELECT E.COD_EMP FROM DBO.EMPLEADO E WHERE E.COD_EMP NOT IN (SELECT E.COD_EMP FROM DBO.EMPLEADO E,DBO.EMPLEADO_FICHA EF WHERE E.COD_EMP=EF.COD_EMP) UNION SELECT E.COD_EMP FROM DBO.EMPLEADO E WHERE E.COD_EMP NOT IN (SELECT E.COD_EMP FROM DBO.EMPLEADO E,DBO.EMPLEADO_FICHA EF,DBO.FICHA_TECNICA FT WHERE E.COD_EMP=EF.COD_EMP AND FT.COD_FICHA=EF.COD_FICHA AND FT.ESTADO='ACTIVO'))");
+            
+            modelo1.setColumnCount(0);
+            modelo1.setRowCount(0);
+            
+            ResultSetMetaData md=rs.getMetaData();
+            int num_column=md.getColumnCount();
+            
+            for(int i=1;i<=num_column;i++){
+                modelo1.addColumn(md.getColumnLabel(i));
+            }
+            
+            while(rs.next()){
+                Object[] fila=new Object[num_column];
+                for(int i=0;i<num_column;i++){
+                    fila[i]=rs.getObject(i+1);
+                }
+                modelo1.addRow(fila);
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null,ex.getMessage());
+        }
+    }
+    
+    private void cargar_fichas(){
+        try{
+            cbo_ficha.removeAllItems();
+            cbo_ficha.addItem("....................");
+            Connection cn=Conection.getConnection();
+            Statement st=cn.createStatement();
+            
+            ResultSet rs=st.executeQuery("select FT.COD_ESTILO from dbo.FICHA_TECNICA FT WHERE FT.ESTADO='ACTIVO'");
+            
+            while(rs.next()){
+                cbo_ficha.addItem(rs.getString(1));
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null,ex.getMessage());
+        }
     }
 
     /**
@@ -59,6 +153,15 @@ public class Frm5 extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
         txt_descripcion = new javax.swing.JTextField();
         btn_limpiar = new javax.swing.JButton();
+        btn_asignar = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        cbo_ficha = new javax.swing.JComboBox();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabla = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabla2 = new javax.swing.JTable();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -150,6 +253,48 @@ public class Frm5 extends javax.swing.JFrame {
         });
         getContentPane().add(btn_limpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 400, 100, 30));
 
+        btn_asignar.setText("Asignar");
+        btn_asignar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_asignarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_asignar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 120, 30));
+
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 20, 10, 410));
+
+        cbo_ficha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbo_fichaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cbo_ficha, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 30, 110, 30));
+
+        tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabla);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 110, 380, 240));
+
+        tabla2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabla2MouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tabla2);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 110, 360, 240));
+
+        jLabel13.setText("POR ASIGNAR");
+        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 80, 90, 20));
+
+        jLabel14.setText("ASIGNADOS");
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 80, 80, 20));
+
         jMenu1.setText("Options");
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_TAB, 0));
@@ -216,17 +361,20 @@ public class Frm5 extends javax.swing.JFrame {
                                                                         String fechaString="";
                                                                         Date fecha=txt_fechaFin.getDate();
                                                                         if(fecha!=null){
-                                                                            int input=JOptionPane.showConfirmDialog(null, "Estás seguro?","Escoger una opción",2,3);
-                                                                            if(input==0){
-                                                                                SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yy");
-                                                                                fechaString=sdf.format(fecha);
+                                                                            SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yy");
+                                                                            fechaString=sdf.format(fecha);
+                                                                            if(Validacion.fecha_valida(fechaString)){
+                                                                                int input=JOptionPane.showConfirmDialog(null, "Estás seguro?","Escoger una opción",2,3);
+                                                                                if(input==0){
+                                                                                    cn=Conection.getConnection();
+                                                                                    st=cn.createStatement();
 
-                                                                                cn=Conection.getConnection();
-                                                                                st=cn.createStatement();
-
-                                                                                st.executeUpdate("insert into dbo.FICHA_TECNICA(COD_ESTILO,VERSION,DIVISION,DESCRIPCION,DESTINO,TEMPORADA,TELA_PRICNIPAL,PROCESO,ARTES,ETIQUETA,FECHA_CREACION,ESTADO,FECHA_FIN) VALUES('"+codigo_estilo+"','"+version+"','"+division+"','"+descripcion+"','"+destino+"','"+temporada+"','"+tela_principal+"','"+proceso+"','"+artes+"','"+etiqueta+"',getDate(),'ACTIVO',convert(datetime,'"+fechaString+"',5))");
-
-                                                                                JOptionPane.showMessageDialog(null, "Se ingresó correctamente!!");     
+                                                                                    st.executeUpdate("insert into dbo.FICHA_TECNICA(COD_ESTILO,VERSION,DIVISION,DESCRIPCION,DESTINO,TEMPORADA,TELA_PRICNIPAL,PROCESO,ARTES,ETIQUETA,FECHA_CREACION,ESTADO,FECHA_FIN) VALUES('"+codigo_estilo+"','"+version+"','"+division+"','"+descripcion+"','"+destino+"','"+temporada+"','"+tela_principal+"','"+proceso+"','"+artes+"','"+etiqueta+"',getDate(),'ACTIVO',convert(datetime,'"+fechaString+"',5))");
+                                                                                    
+                                                                                    cargar_fichas();
+                                                                                    
+                                                                                    JOptionPane.showMessageDialog(null, "Se ingresó correctamente!!");  
+                                                                                } 
                                                                             }
                                                                         }else{
                                                                             JOptionPane.showMessageDialog(null,"Complete todos los campos!!","Mensaje",3);
@@ -271,7 +419,7 @@ public class Frm5 extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null,"Complete todos los campos!!","Mensaje",3);
                     }
                 }else{
-                    JOptionPane.showMessageDialog(null, "Ese codigo de estilo no existe!!","Mensaje",2);
+                    JOptionPane.showMessageDialog(null, "Ese codigo de estilo ya existe!!","Mensaje",2);
                 }
             }else{
                 JOptionPane.showMessageDialog(null,"Complete todos los campos!!","Mensaje",3);
@@ -302,6 +450,125 @@ public class Frm5 extends javax.swing.JFrame {
         obj.setResizable(false);
         this.dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void cbo_fichaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbo_fichaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbo_fichaActionPerformed
+
+    private void btn_asignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_asignarActionPerformed
+        try{
+            Connection cn=Conection.getConnection();
+            Statement st=cn.createStatement();
+            if(seleccion){
+                
+                String codigo_estilo=cbo_ficha.getSelectedItem().toString().trim();
+                if(!codigo_estilo.equalsIgnoreCase("....................")){
+                    
+                    int codigo_ficha=0,cod_empleado=0;
+                    st.executeUpdate("UPDATE FICHA_TECNICA  SET ESTADO='INACTIVO' WHERE CONVERT(VARCHAR,FECHA_FIN,105)=CONVERT(VARCHAR,GETDATE(),105)");
+                    ResultSet rs=st.executeQuery("SELECT FT.COD_FICHA FROM DBO.FICHA_TECNICA FT WHERE FT.COD_ESTILO='"+codigo_estilo+"'");
+                    
+                    if(rs.next()){
+                        codigo_ficha=rs.getInt(1);
+                    }
+                    
+                    ResultSet rs2=st.executeQuery("SELECT E.COD_EMP FROM DBO.EMPLEADO E WHERE E.APELLIDO='"+this.apellido_empleado+"' AND E.NOMBRE='"+this.nombre_empleado+"'");
+                    
+                    if(rs2.next()){
+                        cod_empleado=rs2.getInt(1);
+                    }
+                    
+                    st.executeUpdate("INSERT INTO DBO.EMPLEADO_FICHA VALUES('"+Integer.toString(cod_empleado)+"','"+Integer.toString(codigo_ficha)+"')");
+                    
+                    cargarTabla_uno();
+                    cargarTabla_dos();
+                    this.seleccion=false;
+                    JOptionPane.showMessageDialog(null,"Se asignó correctamente!!");
+                }else{
+                    JOptionPane.showMessageDialog(null,"Codigo de estilo no valido!!","Mensaje",2);
+                }
+                
+            }else{
+                JOptionPane.showMessageDialog(null,"Seleccione una fila de la tabla de empleados por agregar!!");
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null,ex.getMessage());
+        }
+    }//GEN-LAST:event_btn_asignarActionPerformed
+
+    public void popupTable(){
+        JPopupMenu popupMenu=new JPopupMenu();
+        
+        JMenuItem menuitem=new JMenuItem("Quitar Asignación");
+        menuitem.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                quitar_asignacion();
+            }
+        });
+        
+        popupMenu.add(menuitem);
+        tabla2.setComponentPopupMenu(popupMenu);
+    }
+    
+    public void quitar_asignacion(){
+        try{
+            Connection cn=Conection.getConnection();
+            Statement st=cn.createStatement();
+            
+            if(seleccion2){
+                
+                int codigo_ficha=0,cod_empleado=0;
+                    
+                ResultSet rs=st.executeQuery("SELECT FT.COD_FICHA FROM DBO.FICHA_TECNICA FT WHERE FT.COD_ESTILO='"+this.codigo_estilo+"'");
+                    
+                if(rs.next()){
+                    codigo_ficha=rs.getInt(1);
+                }
+                    
+                ResultSet rs2=st.executeQuery("SELECT E.COD_EMP FROM DBO.EMPLEADO E WHERE E.APELLIDO='"+this.apellido_empleado+"' AND E.NOMBRE='"+this.nombre_empleado+"'");
+                    
+                if(rs2.next()){
+                    cod_empleado=rs2.getInt(1);
+                }
+                
+                st.executeUpdate("DELETE FROM DBO.EMPLEADO_FICHA WHERE COD_EMP='"+Integer.toString(cod_empleado)+"' AND COD_FICHA='"+Integer.toString(codigo_ficha)+"'");
+                    
+                cargarTabla_uno();
+                cargarTabla_dos();
+                seleccion2=false;
+                JOptionPane.showMessageDialog(null,"Se eliminó correctamente!!");
+               
+            }else{
+                JOptionPane.showMessageDialog(null,"Seleccione una fila de la tabla de empleados asignados!!");
+            }
+            
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null,ex.getMessage());
+        }
+    }
+    
+    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
+        int fila_selecionada=tabla.getSelectedRow();
+        
+        if(fila_selecionada>=0){
+            seleccion=true;
+            apellido_empleado=tabla.getValueAt(fila_selecionada, 0).toString();
+            nombre_empleado=tabla.getValueAt(fila_selecionada, 1).toString();
+        }
+    }//GEN-LAST:event_tablaMouseClicked
+
+    private void tabla2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla2MouseClicked
+        int fila_selecionada=tabla2.getSelectedRow();
+        
+        if(fila_selecionada>=0){
+            seleccion2=true;
+            apellido_empleado=tabla2.getValueAt(fila_selecionada, 0).toString();
+            nombre_empleado=tabla2.getValueAt(fila_selecionada, 1).toString();
+            codigo_estilo=tabla2.getValueAt(fila_selecionada, 2).toString();
+        }
+    }//GEN-LAST:event_tabla2MouseClicked
 
     /**
      * @param args the command line arguments
@@ -341,11 +608,15 @@ public class Frm5 extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnGrabar;
+    private javax.swing.JButton btn_asignar;
     private javax.swing.JButton btn_limpiar;
+    private javax.swing.JComboBox cbo_ficha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -357,6 +628,11 @@ public class Frm5 extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable tabla;
+    private javax.swing.JTable tabla2;
     private javax.swing.JTextField txt_arte;
     private javax.swing.JTextField txt_descripcion;
     private javax.swing.JTextField txt_destino;

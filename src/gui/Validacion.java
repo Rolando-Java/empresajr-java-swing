@@ -9,6 +9,10 @@ import conn.Conection;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 
 public class Validacion {
@@ -17,51 +21,142 @@ public class Validacion {
         
     }
     
+    static boolean fechas_validas(Date fechaInicio,Date fechaFin){
+        try{
+            if(fechaInicio.before(fechaFin)){
+                return true;
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        return false;
+    }
+    
+    static boolean repite_empleado(String dni){
+        try{
+            boolean dni_repite=false;
+            Connection cn=Conection.getConnection();
+            Statement st=cn.createStatement();
+            
+            ResultSet rs=st.executeQuery("select E.COD_EMP from dbo.EMPLEADO E where E.DNI='"+dni+"'");
+            
+            if(rs.next()){
+                dni_repite=true;
+            }
+            
+            if(dni_repite){
+                JOptionPane.showMessageDialog(null, "Ese empleado ya existe");
+                return true;
+            }else{
+                return false;
+            }
+            
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        return true;
+    }
+    
+    static boolean fecha_valida(String fecha){
+        
+        try{
+            Calendar fech = new GregorianCalendar();
+            int año = fech.get(Calendar.YEAR);
+            int mes = fech.get(Calendar.MONTH);
+            int dia = fech.get(Calendar.DAY_OF_MONTH);
+            SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yy");
+            String fechaString=dia+"-"+(mes+1)+"-"+año;
+
+            Date fechaDate=sdf.parse(fecha);
+            Date fecha_actual=sdf.parse(fechaString);
+
+            if(fechaDate.after(fecha_actual)){
+                return true;
+            }else{
+                JOptionPane.showMessageDialog(null,"La fecha tiene que ser mayor a la fecha actual");
+                return false;
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        return false;
+    }
+    
     static boolean ficha_activa(String cod_ficha,String dni){
         boolean band=false;
         Connection cn=null;
         Statement st=null;
         try{
-            String estado="inactivo";
-            boolean actualizar_estado=false;
+            boolean ficha_activa=false;
             cn=Conection.getConnection();
             st=cn.createStatement();
             
-            ResultSet rs=st.executeQuery("SELECT F.COD_FICHA FROM FICHA_TECNICA F WHERE F.ESTADO='ACTIVO' AND F.COD_FICHA='"+cod_ficha+"'");
+            st.executeUpdate("UPDATE FICHA_TECNICA  SET ESTADO='INACTIVO' WHERE CONVERT(VARCHAR,FECHA_FIN,105)=CONVERT(VARCHAR,GETDATE(),105)");
             
-            if(rs.next()){
-                estado="activo";
+            ResultSet rs3=st.executeQuery("select * from dbo.FICHA_TECNICA ft where ft.ESTADO='ACTIVO' and ft.COD_FICHA='"+cod_ficha+"'");
+            if(rs3.next()){
+                ficha_activa=true;
             }
-            
-            if(estado.equalsIgnoreCase("activo")){
-                ResultSet rs2=st.executeQuery("SELECT F.COD_FICHA FROM FICHA_TECNICA F WHERE CONVERT(VARCHAR,F.FECHA_FIN,105)=CONVERT(VARCHAR,GETDATE(),105) AND F.COD_FICHA='"+cod_ficha+"'");
-
-                if(rs2.next()){
-                    actualizar_estado=true;
-                }
                 
-                if(actualizar_estado){
-                    st.executeUpdate("UPDATE FICHA_TECNICA SET ESTADO='INACTIVO' WHERE COD_FICHA='"+cod_ficha+"'");
-                    band=false;
-                }else{
-                    boolean existencia_empleado=false;
-                    
-                    ResultSet rs3=st.executeQuery("select e.COD_EMP from empleado_ficha ef,empleado e where ef.COD_EMP=e.COD_EMP and e.DNI='"+dni+"'");
-                    
-                    if(rs3.next()){
-                        existencia_empleado=true;
-                    }
-                    
-                    if(existencia_empleado){
-                        band=true;
-                    }else{
-                        band=false;
-                    }
-                }
-                
+            if(ficha_activa){
+                return true;
             }else{
-                band=false;
+                JOptionPane.showMessageDialog(null, "Esa ficha ya está consumada!!");
+                return false;
             }
+            
+            
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        return band;
+    }
+    
+    static boolean permite_ingresar(String cod_ficha,String dni){
+        boolean band=false;
+        Connection cn=null;
+        Statement st=null;
+        try{
+            boolean actualizar_estado=false,empleado_existe=false,ficha_activa=false;
+            cn=Conection.getConnection();
+            st=cn.createStatement();
+            
+            st.executeUpdate("UPDATE FICHA_TECNICA  SET ESTADO='INACTIVO' WHERE CONVERT(VARCHAR,FECHA_FIN,105)=CONVERT(VARCHAR,GETDATE(),105)");
+            
+            ResultSet rs2=st.executeQuery("select * from dbo.EMPLEADO e,dbo.EMPLEADO_FICHA ef where e.COD_EMP=ef.COD_EMP and e.DNI='"+dni+"'");
+            
+            if(rs2.next()){
+               empleado_existe=true;
+            }
+            
+            if(!empleado_existe){
+                ResultSet rs3=st.executeQuery("select * from dbo.FICHA_TECNICA ft where ft.ESTADO='ACTIVO' and ft.COD_FICHA='"+cod_ficha+"'");
+                if(rs3.next()){
+                    ficha_activa=true;
+                }
+                
+                if(ficha_activa){
+                    return true;
+                }else{
+                    JOptionPane.showMessageDialog(null, "Esa ficha ya está consumada!!");
+                    return false;
+                }
+            }else{
+                boolean band2=false;
+                ResultSet rs4=st.executeQuery("select * from dbo.EMPLEADO e,dbo.EMPLEADO_FICHA ef,dbo.FICHA_TECNICA ft where e.COD_EMP=ef.COD_EMP and ft.COD_FICHA=ef.COD_FICHA and e.DNI='"+dni+"' and ft.ESTADO='ACTIVO'");
+            
+                if(rs4.next()){
+                    band2=true;
+                }
+                
+                if(band2){
+                    JOptionPane.showMessageDialog(null, "Ya se encuentra asignado a una ficha técnica!!");
+                   return false; 
+                }else{
+                    return true;
+                }
+            }
+            
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -226,7 +321,7 @@ public class Validacion {
     
     static boolean existencia_letras(String cad){
         boolean band=false;
-        int tan=cad.length();
+        int tan=cad.trim().length();
         
         for(int i=0;i<tan;i++){
             char te=cad.charAt(i);
