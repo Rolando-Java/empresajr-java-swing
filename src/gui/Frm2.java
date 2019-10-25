@@ -24,7 +24,7 @@ public class Frm2 extends javax.swing.JFrame {
     
     public Frm2() {
         initComponents();
-        label1.setText("Estos datos corresponden del "+StringFecha_inicio+" al "+StringFecha_fin);
+        label1.setText("ESTE AVANCE CORRESPONDE DEL "+StringFecha_inicio+" AL "+StringFecha_fin);
         tabla.setModel(modelo1);
         cargar_tabla();
     }
@@ -46,14 +46,10 @@ public class Frm2 extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        label1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        getContentPane().add(label1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 410, 20));
+        label1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         jScrollPane1.setViewportView(tabla);
-
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 66, 591, 271));
 
         jMenu1.setText("Options");
         jMenu1.addActionListener(new java.awt.event.ActionListener() {
@@ -75,6 +71,30 @@ public class Frm2 extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(188, 188, 188)
+                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 531, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(15, 15, 15))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
+        );
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -91,7 +111,7 @@ public class Frm2 extends javax.swing.JFrame {
             cn=Conection.getConnection();
             st=cn.createStatement();
             
-            ResultSet rs=st.executeQuery("SELECT FT.COD_ESTILO,E.APELLIDO+','+E.NOMBRE AS EMPLEADO,A.PRENDAS_MAL AS \"PRENDAS BIEN ELABORADAS\",A.PRENDAS_MAL AS \"PRENDAS MAL ELABORADAS\",A.HORAS_TRAB AS \"HORAS TRABAJADAS\" FROM AVANCE A,EMPLEADO E,FICHA_TECNICA FT WHERE A.COD_EMP=E.COD_EMP AND A.COD_FICHA=FT.COD_FICHA AND FT.COD_ESTILO='"+codigo_estilo+"' AND CONVERT(VARCHAR,A.FECHA_INICIO,105) BETWEEN '"+this.StringFecha_inicio+"' AND '"+this.StringFecha_fin+"'");
+            ResultSet rs=st.executeQuery("SELECT FT.COD_ESTILO AS \"CODIGO DE ESTILO\",E.APELLIDO+','+E.NOMBRE AS EMPLEADO,A.PRENDAS_MAL AS \"PRENDAS BIEN ELABORADAS\",A.PRENDAS_MAL AS \"PRENDAS MAL ELABORADAS\",A.HORAS_TRAB AS \"HORAS TRABAJADAS\" FROM AVANCE A,EMPLEADO E,FICHA_TECNICA FT WHERE A.COD_EMP=E.COD_EMP AND A.COD_FICHA=FT.COD_FICHA AND FT.COD_ESTILO='"+codigo_estilo+"' AND CONVERT(VARCHAR,A.FECHA_INICIO,105) BETWEEN '"+this.StringFecha_inicio+"' AND '"+this.StringFecha_fin+"'");
             
             ResultSetMetaData md=rs.getMetaData();
             int cantidad_columnas=md.getColumnCount();

@@ -5,14 +5,16 @@
  */
 package gui;
 
+
 /**
  *
  * @author Rolando Andre
  */
-public class Principal {
+public class Principal{
    
     public static void main(String[] args){
         Frm obj=new Frm();
+        obj.setLayout(null);
         obj.setVisible(true);
         obj.setLocationRelativeTo(null);
         obj.setResizable(false);

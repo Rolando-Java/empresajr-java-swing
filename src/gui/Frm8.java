@@ -32,7 +32,6 @@ public class Frm8 extends javax.swing.JFrame {
         btn_ficha = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btn_mantenimiento.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btn_mantenimiento.setText("MANTENIMIENTO DE EMPLEADOS");
@@ -41,7 +40,6 @@ public class Frm8 extends javax.swing.JFrame {
                 btn_mantenimientoActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_mantenimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 390, 140));
 
         btn_avances.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btn_avances.setText("AVANCES");
@@ -50,7 +48,6 @@ public class Frm8 extends javax.swing.JFrame {
                 btn_avancesActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_avances, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 200));
 
         btn_ficha.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btn_ficha.setText("FICHA TECNICA");
@@ -59,7 +56,32 @@ public class Frm8 extends javax.swing.JFrame {
                 btn_fichaActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_ficha, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 200, 200));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btn_avances, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_ficha, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
+                    .addComponent(btn_mantenimiento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btn_avances, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                    .addComponent(btn_ficha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_mantenimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
