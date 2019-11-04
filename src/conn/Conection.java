@@ -29,7 +29,7 @@ public class Conection {
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             cn=(Connection) DriverManager.getConnection(url);
-            System.out.println("Conexión establecida");
+            //System.out.println("Conexión establecida");
         }catch(Exception ex){
             System.out.println("Exception: "+ex.getMessage());
         }

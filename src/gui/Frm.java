@@ -116,7 +116,7 @@ public class Frm extends javax.swing.JFrame {
             cn=Conection.getConnection();
             st=cn.createStatement();
             
-            ResultSet rs=st.executeQuery("select nombre from dbo.usuario where nombre='"+usuario+"' and password='"+contrasena+"';");//sentencia para validadrla existencia de la sesion, mediante un uusarioo u contraseña que  sean unicos
+            ResultSet rs=st.executeQuery("select usuario from dbo.usuario where usuario='"+usuario+"' and password='"+contrasena+"';");//sentencia para validadrla existencia de la sesion, mediante un uusarioo u contraseña que  sean unicos
             if(rs.next()){
                 existe_sesion=true;
             }
