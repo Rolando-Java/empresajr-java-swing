@@ -17,6 +17,26 @@ import java.sql.SQLException;
 public class Conection {
     
     public static Connection getConnection(){
+        Connection cn=null;
+        String url="jdbc:sqlserver://practicasoffice.database.windows.net:1433;"
+                + "database=Software;"
+                + "user=abraham;"
+                + "password=Practicas01;"
+                + "encrypt=true;"
+                + "trustServerCertificate=false;"
+                + "hostNameInCertificate=*.database.windows.net;"
+                + "loginTimeout=30;";
+        try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            cn=(Connection) DriverManager.getConnection(url);
+            System.out.println("Conexión establecida");
+        }catch(Exception ex){
+            System.out.println("Exception: "+ex.getMessage());
+        }
+        return cn;
+    }
+    
+    public static Connection getConnection2(){
         Connection conect=null;
         try {
           String connectionUrl = "jdbc:sqlserver://localhost;database=Software;user=Rolando;password=timbersaw123";
@@ -32,7 +52,7 @@ public class Conection {
         return conect;
     }
     
-    public static Connection getConnection2(){
+    public static Connection getConnection3(){
         Connection cn=null;
         String url="jdbc:sqlserver://yousqlserver.database.windows.net:1433;"
                 + "database=software;"
