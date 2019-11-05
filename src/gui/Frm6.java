@@ -101,6 +101,7 @@ public class Frm6 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btn_buscarPorCodigoEstilo = new javax.swing.JButton();
         btn_modificar = new javax.swing.JButton();
@@ -133,10 +134,16 @@ public class Frm6 extends javax.swing.JFrame {
         menuitem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1360, 720));
+
+        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1362, 720));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("MANTENIMIENTO DE EMPLEADO");
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("MANTENIMIENTO DE EMPLEADOS");
 
+        btn_buscarPorCodigoEstilo.setForeground(new java.awt.Color(102, 102, 102));
         btn_buscarPorCodigoEstilo.setText("Buscar por código de estilo");
         btn_buscarPorCodigoEstilo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,6 +151,7 @@ public class Frm6 extends javax.swing.JFrame {
             }
         });
 
+        btn_modificar.setForeground(new java.awt.Color(102, 102, 102));
         btn_modificar.setText("Modificar");
         btn_modificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -151,6 +159,7 @@ public class Frm6 extends javax.swing.JFrame {
             }
         });
 
+        btn_eliminar.setForeground(new java.awt.Color(102, 102, 102));
         btn_eliminar.setText("Eliminar");
         btn_eliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -165,14 +174,19 @@ public class Frm6 extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tabla);
 
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Correo:");
 
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Dirección:");
 
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Teléfono:");
 
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Fecha de nacimiento:");
 
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Dni:");
 
         txt_direccion.addActionListener(new java.awt.event.ActionListener() {
@@ -181,10 +195,13 @@ public class Frm6 extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Apellidos:");
 
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Nombres:");
 
+        btn_listar.setForeground(new java.awt.Color(102, 102, 102));
         btn_listar.setText("Listar");
         btn_listar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,10 +209,13 @@ public class Frm6 extends javax.swing.JFrame {
             }
         });
 
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Nacionalidad:");
 
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Cargo/Función:");
 
+        jButton1.setForeground(new java.awt.Color(102, 102, 102));
         jButton1.setText("Limpiar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,9 +225,123 @@ public class Frm6 extends javax.swing.JFrame {
 
         cbo_funcion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { ".................." }));
 
-        jMenu1.setText("Option");
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jScrollPane1)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11))
+                .addGap(35, 35, 35)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txt_correo, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_dni, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_nacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbo_funcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_fechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_apellido, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(270, 270, 270)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btn_listar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(85, 85, 85)
+                                .addComponent(btn_buscarPorCodigoEstilo, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(21, 21, 21)
+                                .addComponent(txt_estilo, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(403, 403, 403)
+                        .addComponent(jLabel1)))
+                .addGap(560, 560, 560))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addComponent(jLabel1)
+                .addGap(37, 37, 37)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_buscarPorCodigoEstilo)
+                    .addComponent(txt_estilo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_listar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(txt_apellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txt_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txt_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbo_funcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(jLabel7)
+                                .addGap(15, 15, 15)
+                                .addComponent(jLabel8)
+                                .addGap(15, 15, 15)
+                                .addComponent(jLabel10)
+                                .addGap(15, 15, 15)
+                                .addComponent(jLabel11))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_fechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(5, 5, 5)
+                                .addComponent(txt_correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(5, 5, 5)
+                                .addComponent(txt_dni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(5, 5, 5)
+                                .addComponent(txt_nacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 38, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
+        );
 
-        menuitem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_TAB, 0));
+        jMenu1.setText("Opción");
+
         menuitem1.setText("Regresar");
         menuitem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,135 +358,196 @@ public class Frm6 extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(288, 288, 288)
-                        .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(btn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(btn_listar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1021, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3))
-                                .addGap(28, 28, 28))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel5)
-                                .addComponent(jLabel4)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(1, 1, 1)
-                                    .addComponent(jLabel6))))
-                        .addGap(56, 56, 56))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_apellido, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbo_funcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_fechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_correo, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_dni, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_nacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(419, 419, 419)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(384, 384, 384)
-                        .addComponent(btn_buscarPorCodigoEstilo, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txt_estilo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jLabel1)
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_buscarPorCodigoEstilo)
-                    .addComponent(txt_estilo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_listar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(46, 46, 46)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txt_apellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbo_funcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
-                        .addComponent(txt_fechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_dni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14)
-                        .addComponent(txt_nacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jLabel2)
-                        .addGap(17, 17, 17)
-                        .addComponent(jLabel3)
-                        .addGap(17, 17, 17)
-                        .addComponent(jLabel4)
-                        .addGap(17, 17, 17)
-                        .addComponent(jLabel5)
-                        .addGap(17, 17, 17)
-                        .addComponent(jLabel6)
-                        .addGap(17, 17, 17)
-                        .addComponent(jLabel7)
-                        .addGap(17, 17, 17)
-                        .addComponent(jLabel8)
-                        .addGap(17, 17, 17)
-                        .addComponent(jLabel10)
-                        .addGap(17, 17, 17)
-                        .addComponent(jLabel11)))
-                .addContainerGap(28, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void menuitem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuitem1ActionPerformed
+        Frm7 objF=new Frm7();
+        objF.setVisible(true);
+        objF.setLocationRelativeTo(null);
+        objF.setResizable(false);
+        this.dispose();
+    }//GEN-LAST:event_menuitem1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        limpiar_campos();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btn_listarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_listarActionPerformed
+        cargarTabla();
+    }//GEN-LAST:event_btn_listarActionPerformed
+
+    private void txt_direccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_direccionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_direccionActionPerformed
+
+    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
+        int fila_selecionada=tabla.getSelectedRow();
+        if(fila_selecionada>=0){
+            txt_apellido.setText(tabla.getValueAt(fila_selecionada, 0).toString());
+            txt_nombre.setText(tabla.getValueAt(fila_selecionada, 1).toString());
+            txt_direccion.setText(tabla.getValueAt(fila_selecionada, 2).toString());
+            txt_telefono.setText(tabla.getValueAt(fila_selecionada, 3).toString());
+            cbo_funcion.setSelectedItem(tabla.getValueAt(fila_selecionada,4).toString());
+
+            String fechaString=tabla.getValueAt(fila_selecionada, 5).toString();
+            SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yy");
+            Date fechaDate;
+            try {
+                fechaDate = sdf.parse(fechaString);
+                txt_fechaNacimiento.setDate(fechaDate);
+            } catch (ParseException ex) {
+                Logger.getLogger(Frm6.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            txt_correo.setText(tabla.getValueAt(fila_selecionada, 6).toString());
+
+            dni=tabla.getValueAt(fila_selecionada, 7).toString();
+            txt_dni.setText(dni);
+
+            txt_nacionalidad.setText(tabla.getValueAt(fila_selecionada,8).toString());
+        }
+    }//GEN-LAST:event_tablaMouseClicked
+
+    private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
+        Connection cn=null;
+        Statement st=null;
+        try{
+
+            if(this.dni!=null){
+                int input = JOptionPane.showConfirmDialog(null, "Estás seguro?","Escoger una opción",2,3);
+                if(input==0){
+                    cn=Conection.getConnection();
+                    st=cn.createStatement();
+                    st.executeUpdate("delete from dbo.EMPLEADO_FICHA where COD_EMP=(select cod_emp from empleado where dni='"+this.dni+"')");
+                    st.executeUpdate("delete from dbo.empleado where dni='"+this.dni+"'");//sentencia sql para eliminar una fila de la tabla donde el dni se encuentre
+                    cargarTabla();
+                    JOptionPane.showMessageDialog(null, "Se eliminó correctamente!!");
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Seleccione una fila de la tabla");
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_btn_eliminarActionPerformed
+
+    private void btn_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarActionPerformed
+        Connection cn=null;
+        Statement st=null;
+        try{
+
+            if(dni!=null){
+                String apellido=txt_apellido.getText().toUpperCase().trim();
+                if(!apellido.equalsIgnoreCase("")){
+                    if(!Validacion.existencia_numero(apellido)){
+                        String nombre=txt_nombre.getText().toUpperCase().trim();
+                        if(!nombre.equalsIgnoreCase("")){
+                            if(!Validacion.existencia_numero(nombre)){
+                                String direccion=txt_direccion.getText().toUpperCase().trim();
+                                if(!direccion.equalsIgnoreCase("")){
+                                    String telefono=txt_telefono.getText().trim();
+                                    if(!telefono.equalsIgnoreCase("")){
+                                        if(!Validacion.existencia_letras(telefono)){
+                                            String funcion=cbo_funcion.getSelectedItem().toString();
+                                            if(!funcion.equalsIgnoreCase("..................")){
+                                                String fechaString=null;
+                                                Date fecha= txt_fechaNacimiento.getDate();
+                                                if(fecha!=null){
+                                                    SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yy");
+                                                    fechaString=sdf.format(fecha);
+                                                    String correo=txt_correo.getText().toLowerCase().trim();
+                                                    if(!correo.equalsIgnoreCase("")){
+                                                        if(Validacion.existencia_arroba(correo)){
+                                                            String dni=txt_dni.getText().trim();
+                                                            if(!dni.equalsIgnoreCase("")){
+                                                                if(!Validacion.existencia_letras(dni)){
+                                                                    String nacionalidad=txt_nacionalidad.getText().toUpperCase().trim();
+                                                                    if(!nacionalidad.equalsIgnoreCase("")){
+                                                                        if(!Validacion.existencia_numero(nacionalidad)){
+                                                                            int input=JOptionPane.showConfirmDialog(null, "Estás seguro?","Escoger una opción",2,3);
+                                                                            if(input==0){
+                                                                                String codigo_funcion="";
+                                                                                cn=Conection.getConnection();
+                                                                                st=cn.createStatement();
+
+                                                                                ResultSet rs=st.executeQuery("select cod_funcion from dbo.FUNCION where descripcion='"+funcion+"'");
+
+                                                                                if(rs.next()){
+                                                                                    codigo_funcion=rs.getString(1);
+                                                                                }
+
+                                                                                st.executeUpdate("update dbo.EMPLEADO set apellido='"+apellido+"',nombre='"+nombre+"',direccion='"+direccion+"',telefono='"+telefono+"',cod_funcion='"+codigo_funcion+"',fecha_nac=convert(datetime,'"+fechaString+"',5),correo='"+correo+"',dni='"+dni+"',nacionalidad='"+nacionalidad+"' where dni='"+this.dni+"'");
+                                                                                cargarTabla();
+
+                                                                                JOptionPane.showMessageDialog(null, "Se modificó correctamente!!");
+                                                                            }
+                                                                        }else{
+                                                                            JOptionPane.showMessageDialog(null,"La nacionalidad no debe contener números!!","Mensaje",2);
+                                                                        }
+                                                                    }else{
+                                                                        JOptionPane.showMessageDialog(null, "Complete todos los campos!!","Mesanje",3);
+                                                                    }
+                                                                }else{
+                                                                    JOptionPane.showMessageDialog(null,"El dni no debe contener letras!!","Mensaje",2);
+                                                                }
+                                                            }else{
+                                                                JOptionPane.showMessageDialog(null, "Complete todos los campos!!","Mesanje",3);
+                                                            }
+                                                        }else{
+                                                            JOptionPane.showMessageDialog(null,"El correo debe tener @!!","Mensaje",2);
+                                                        }
+                                                    }else{
+                                                        JOptionPane.showMessageDialog(null, "Complete todos los campos!!","Mesanje",3);
+                                                    }
+                                                }else{
+                                                    JOptionPane.showMessageDialog(null, "Complete todos los campos!!","Mesanje",3);
+                                                }
+                                            }else{
+                                                JOptionPane.showMessageDialog(null, "Complete todos los campos!!","Mesanje",3);
+                                            }
+                                        }else{
+                                            JOptionPane.showMessageDialog(null,"El teléfono no debe contener letras!!","Mensaje",2);
+                                        }
+                                    }else{
+                                        JOptionPane.showMessageDialog(null, "Complete todos los campos!!","Mesanje",3);
+                                    }
+                                }else{
+                                    JOptionPane.showMessageDialog(null, "Complete todos los campos!!","Mesanje",3);
+                                }
+                            }else{
+                                JOptionPane.showMessageDialog(null,"El nombre no debe contener números!!","Mensaje",2);
+                            }
+                        }else{
+                            JOptionPane.showMessageDialog(null, "Complete todos los campos!!","Mesanje",3);
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null,"El apellido no debe contener números!!","Mensaje",2);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Complete todos los campos!!","Mesanje",3);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Seleccione una fila de la tabla");
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_btn_modificarActionPerformed
 
     private void btn_buscarPorCodigoEstiloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarPorCodigoEstiloActionPerformed
         Connection cn=null;
         Statement st=null;
         try{
             String codigo_estilo=txt_estilo.getText().toUpperCase().trim();
-            
+
             if(!codigo_estilo.equalsIgnoreCase("")){
                 if(Validacion.existe_codigo_estilo(codigo_estilo)){
                     int cantidad_filas=0;
@@ -360,11 +555,11 @@ public class Frm6 extends javax.swing.JFrame {
                     st=cn.createStatement();
 
                     ResultSet rs2=st.executeQuery("select count(*) from dbo.FICHA_TECNICA F,dbo.EMPLEADO_FICHA EF,dbo.EMPLEADO E,dbo.FUNCION U where cod_estilo='"+codigo_estilo+"' and F.COD_FICHA=EF.COD_FICHA and E.COD_EMP=EF.COD_EMP and U.COD_FUNCION=E.COD_FUNCION");
-                    
+
                     if(rs2.next()){
                         cantidad_filas=rs2.getInt(1);
                     }
-                    
+
                     if(cantidad_filas>0){
                         ResultSet rs=st.executeQuery("select apellido as APELLIDO,nombre as NOMBRE,direccion as DIRECCION,telefono as TELEFONO,U.DESCRIPCION as FUNCION,fecha_nac as FECHA_NAC,correo as CORREO,dni as DNI,nacionalidad as NACIONALIDAD from dbo.FICHA_TECNICA F,dbo.EMPLEADO_FICHA EF,dbo.EMPLEADO E,dbo.FUNCION U where cod_estilo='"+codigo_estilo+"' and F.COD_FICHA=EF.COD_FICHA and E.COD_EMP=EF.COD_EMP and U.COD_FUNCION=E.COD_FUNCION order by E.APELLIDO asc");
 
@@ -376,7 +571,7 @@ public class Frm6 extends javax.swing.JFrame {
                         for(int i=1;i<=cantidad_columnas;i++){
                             modelo1.addColumn(md.getColumnLabel(i));
                         }
-        
+
                         while(rs.next()){
                             Object[] fila=new Object[cantidad_columnas];
                             for(int i=0;i<cantidad_columnas;i++){
@@ -400,177 +595,6 @@ public class Frm6 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_buscarPorCodigoEstiloActionPerformed
 
-    private void btn_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarActionPerformed
-        Connection cn=null;
-        Statement st=null;
-        try{
-            
-            if(dni!=null){
-                    String apellido=txt_apellido.getText().toUpperCase().trim();
-                    if(!apellido.equalsIgnoreCase("")){
-                        if(!Validacion.existencia_numero(apellido)){
-                            String nombre=txt_nombre.getText().toUpperCase().trim();
-                            if(!nombre.equalsIgnoreCase("")){
-                                if(!Validacion.existencia_numero(nombre)){
-                                    String direccion=txt_direccion.getText().toUpperCase().trim();
-                                    if(!direccion.equalsIgnoreCase("")){
-                                        String telefono=txt_telefono.getText().trim();
-                                        if(!telefono.equalsIgnoreCase("")){
-                                            if(!Validacion.existencia_letras(telefono)){
-                                                String funcion=cbo_funcion.getSelectedItem().toString();
-                                                if(!funcion.equalsIgnoreCase("..................")){
-                                                    String fechaString=null;
-                                                    Date fecha= txt_fechaNacimiento.getDate();
-                                                    if(fecha!=null){
-                                                        SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yy");
-                                                        fechaString=sdf.format(fecha);
-                                                        String correo=txt_correo.getText().toLowerCase().trim();
-                                                        if(!correo.equalsIgnoreCase("")){
-                                                            if(Validacion.existencia_arroba(correo)){
-                                                                String dni=txt_dni.getText().trim();
-                                                                if(!dni.equalsIgnoreCase("")){
-                                                                    if(!Validacion.existencia_letras(dni)){
-                                                                        String nacionalidad=txt_nacionalidad.getText().toUpperCase().trim();
-                                                                        if(!nacionalidad.equalsIgnoreCase("")){
-                                                                            if(!Validacion.existencia_numero(nacionalidad)){
-                                                                                int input=JOptionPane.showConfirmDialog(null, "Estás seguro?","Escoger una opción",2,3);
-                                                                                if(input==0){
-                                                                                    String codigo_funcion="";
-                                                                                    cn=Conection.getConnection();
-                                                                                    st=cn.createStatement();
-
-                                                                                    ResultSet rs=st.executeQuery("select cod_funcion from dbo.FUNCION where descripcion='"+funcion+"'");
-
-                                                                                    if(rs.next()){
-                                                                                        codigo_funcion=rs.getString(1);
-                                                                                    }
-
-                                                                                    st.executeUpdate("update dbo.EMPLEADO set apellido='"+apellido+"',nombre='"+nombre+"',direccion='"+direccion+"',telefono='"+telefono+"',cod_funcion='"+codigo_funcion+"',fecha_nac=convert(datetime,'"+fechaString+"',5),correo='"+correo+"',dni='"+dni+"',nacionalidad='"+nacionalidad+"' where dni='"+this.dni+"'");
-                                                                                    cargarTabla();
-
-                                                                                    JOptionPane.showMessageDialog(null, "Se modificó correctamente!!");      
-                                                                                }
-                                                                            }else{
-                                                                                JOptionPane.showMessageDialog(null,"La nacionalidad no debe contener números!!","Mensaje",2);
-                                                                            }
-                                                                        }else{
-                                                                            JOptionPane.showMessageDialog(null, "Complete todos los campos!!","Mesanje",3);
-                                                                        }
-                                                                    }else{
-                                                                        JOptionPane.showMessageDialog(null,"El dni no debe contener letras!!","Mensaje",2);
-                                                                    }
-                                                                }else{
-                                                                    JOptionPane.showMessageDialog(null, "Complete todos los campos!!","Mesanje",3);
-                                                                }
-                                                            }else{
-                                                                JOptionPane.showMessageDialog(null,"El correo debe tener @!!","Mensaje",2);
-                                                            }
-                                                        }else{
-                                                            JOptionPane.showMessageDialog(null, "Complete todos los campos!!","Mesanje",3);
-                                                        }
-                                                    }else{
-                                                        JOptionPane.showMessageDialog(null, "Complete todos los campos!!","Mesanje",3);
-                                                    }
-                                                }else{
-                                                    JOptionPane.showMessageDialog(null, "Complete todos los campos!!","Mesanje",3);
-                                                }
-                                            }else{
-                                                JOptionPane.showMessageDialog(null,"El telefono no debe contener letras!!","Mensaje",2);
-                                            }
-                                        }else{
-                                            JOptionPane.showMessageDialog(null, "Complete todos los campos!!","Mesanje",3);
-                                        }
-                                    }else{
-                                        JOptionPane.showMessageDialog(null, "Complete todos los campos!!","Mesanje",3);
-                                    }
-                                }else{
-                                    JOptionPane.showMessageDialog(null,"El nombre no debe contener números!!","Mensaje",2);
-                                }
-                            }else{
-                                JOptionPane.showMessageDialog(null, "Complete todos los campos!!","Mesanje",3);
-                            }
-                        }else{
-                            JOptionPane.showMessageDialog(null,"El apellido no debe contener números!!","Mensaje",2);
-                        }
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Complete todos los campos!!","Mesanje",3);
-                    }
-            }else{
-                JOptionPane.showMessageDialog(null, "Seleccione una fila de la tabla");
-            }
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-    }//GEN-LAST:event_btn_modificarActionPerformed
-
-    private void txt_direccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_direccionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_direccionActionPerformed
-
-    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
-        int fila_selecionada=tabla.getSelectedRow();
-        if(fila_selecionada>=0){
-            txt_apellido.setText(tabla.getValueAt(fila_selecionada, 0).toString());
-            txt_nombre.setText(tabla.getValueAt(fila_selecionada, 1).toString());
-            txt_direccion.setText(tabla.getValueAt(fila_selecionada, 2).toString());
-            txt_telefono.setText(tabla.getValueAt(fila_selecionada, 3).toString());
-            cbo_funcion.setSelectedItem(tabla.getValueAt(fila_selecionada,4).toString());
-            
-            String fechaString=tabla.getValueAt(fila_selecionada, 5).toString();
-            SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yy");
-            Date fechaDate;
-            try {
-                fechaDate = sdf.parse(fechaString);
-                txt_fechaNacimiento.setDate(fechaDate);
-            } catch (ParseException ex) {
-                Logger.getLogger(Frm6.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            txt_correo.setText(tabla.getValueAt(fila_selecionada, 6).toString());
-            
-            dni=tabla.getValueAt(fila_selecionada, 7).toString();
-            txt_dni.setText(dni);
-            
-            txt_nacionalidad.setText(tabla.getValueAt(fila_selecionada,8).toString());
-        }
-            
-    }//GEN-LAST:event_tablaMouseClicked
-
-    private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
-        Connection cn=null;
-        Statement st=null;
-        try{
-            
-            if(this.dni!=null){
-                int input = JOptionPane.showConfirmDialog(null, "Estás seguro?","Escoger una opción",2,3);
-                if(input==0){
-                    cn=Conection.getConnection();
-                    st=cn.createStatement();
-                    st.executeUpdate("delete from dbo.EMPLEADO_FICHA where COD_EMP=(select cod_emp from empleado where dni='"+this.dni+"')");
-                    st.executeUpdate("delete from dbo.empleado where dni='"+this.dni+"'");//sentencia sql para eliminar una fila de la tabla donde el dni se encuentre
-                    cargarTabla();
-                    JOptionPane.showMessageDialog(null, "Se eliminó correctamente!!");  
-                }
-            }else{
-                JOptionPane.showMessageDialog(null, "Seleccione una fila de la tabla");
-            }
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-    }//GEN-LAST:event_btn_eliminarActionPerformed
-
-    private void btn_listarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_listarActionPerformed
-        cargarTabla();
-    }//GEN-LAST:event_btn_listarActionPerformed
-
-    private void menuitem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuitem1ActionPerformed
-        Frm7 objF=new Frm7();
-        objF.setVisible(true);
-        objF.setLocationRelativeTo(null);
-        objF.setResizable(false);
-        this.dispose();
-    }//GEN-LAST:event_menuitem1ActionPerformed
-
     private void limpiar_campos(){
         txt_apellido.setText("");
         txt_nombre.setText("");
@@ -583,10 +607,6 @@ public class Frm6 extends javax.swing.JFrame {
         txt_nacionalidad.setText("");
     }
     
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        limpiar_campos();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -641,6 +661,7 @@ public class Frm6 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenuItem menuitem1;
     private javax.swing.JTable tabla;
