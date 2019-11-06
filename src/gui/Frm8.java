@@ -31,7 +31,7 @@ public class Frm8 extends javax.swing.JFrame {
         btn_mantenimiento = new javax.swing.JButton();
         btn_ficha = new javax.swing.JButton();
         btn_avances = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        lbl_titulo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -42,6 +42,7 @@ public class Frm8 extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
         jPanel1.setPreferredSize(new java.awt.Dimension(334, 490));
+        jPanel1.setLayout(null);
 
         btn_mantenimiento.setBackground(new java.awt.Color(102, 102, 102));
         btn_mantenimiento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -52,6 +53,8 @@ public class Frm8 extends javax.swing.JFrame {
                 btn_mantenimientoActionPerformed(evt);
             }
         });
+        jPanel1.add(btn_mantenimiento);
+        btn_mantenimiento.setBounds(20, 120, 290, 100);
 
         btn_ficha.setBackground(new java.awt.Color(102, 102, 102));
         btn_ficha.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -62,6 +65,8 @@ public class Frm8 extends javax.swing.JFrame {
                 btn_fichaActionPerformed(evt);
             }
         });
+        jPanel1.add(btn_ficha);
+        btn_ficha.setBounds(20, 220, 290, 100);
 
         btn_avances.setBackground(new java.awt.Color(102, 102, 102));
         btn_avances.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -72,47 +77,14 @@ public class Frm8 extends javax.swing.JFrame {
                 btn_avancesActionPerformed(evt);
             }
         });
+        jPanel1.add(btn_avances);
+        btn_avances.setBounds(20, 320, 290, 100);
 
-        jButton1.setBackground(new java.awt.Color(102, 102, 102));
-        jButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("REPORTES");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(btn_mantenimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btn_avances, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_ficha, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(40, 40, 40))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(btn_mantenimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(btn_ficha, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(btn_avances, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
-        );
+        lbl_titulo.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        lbl_titulo.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_titulo.setText("J&R");
+        jPanel1.add(lbl_titulo);
+        lbl_titulo.setBounds(130, 30, 82, 58);
 
         jMenu1.setText("Sesion");
 
@@ -133,7 +105,7 @@ public class Frm8 extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -167,10 +139,6 @@ public class Frm8 extends javax.swing.JFrame {
         obj.setResizable(false);
         this.dispose();
     }//GEN-LAST:event_btn_fichaActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         Frm obj=new Frm();
@@ -219,10 +187,10 @@ public class Frm8 extends javax.swing.JFrame {
     private javax.swing.JButton btn_avances;
     private javax.swing.JButton btn_ficha;
     private javax.swing.JButton btn_mantenimiento;
-    private javax.swing.JButton jButton1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lbl_titulo;
     // End of variables declaration//GEN-END:variables
 }
