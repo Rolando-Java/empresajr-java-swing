@@ -6,6 +6,14 @@
 package gui;
 
 import conn.Conection;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import static java.awt.print.Printable.NO_SUCH_PAGE;
+import static java.awt.print.Printable.PAGE_EXISTS;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -17,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Rolando Andre
  */
-public class Frm1 extends javax.swing.JFrame {
+public class Frm1 extends javax.swing.JFrame implements Printable{
 
     DefaultTableModel modelo1=new DefaultTableModel();
     
@@ -72,48 +80,47 @@ public class Frm1 extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        panel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1010, 430));
+        setPreferredSize(new java.awt.Dimension(1010, 490));
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
-        jPanel1.setPreferredSize(new java.awt.Dimension(1010, 430));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1010, 490));
+        jPanel1.setLayout(null);
+
+        panel2.setBackground(new java.awt.Color(255, 255, 255));
+        panel2.setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("PROGRESO DE PRODUCCIÓN");
+        panel2.add(jLabel1);
+        jLabel1.setBounds(377, 25, 236, 14);
 
         jScrollPane1.setViewportView(tabla);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(362, 362, 362))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 940, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
-        );
+        panel2.add(jScrollPane1);
+        jScrollPane1.setBounds(15, 69, 940, 260);
+
+        jPanel1.add(panel2);
+        panel2.setBounds(20, 30, 970, 350);
+
+        jButton2.setForeground(new java.awt.Color(102, 102, 102));
+        jButton2.setText("Imprimir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2);
+        jButton2.setBounds(880, 390, 110, 40);
 
         jMenu1.setText("Opción");
 
@@ -151,6 +158,21 @@ public class Frm1 extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try{
+            PrinterJob gap= PrinterJob.getPrinterJob();
+            gap.setPrintable(this);
+            boolean top=gap.printDialog();
+            if(top){
+                gap.print();
+            }
+            
+           
+        }catch(PrinterException ex){
+            JOptionPane.showMessageDialog(null, "Error de programa","Error\n"+ex.getMessage(),JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -187,12 +209,27 @@ public class Frm1 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel panel2;
     private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+        if(pageIndex>0){
+            return NO_SUCH_PAGE;
+        }
+        Graphics2D hub=(Graphics2D) graphics;
+        hub.translate(pageFormat.getImageableX()+20,pageFormat.getImageableY()+20);
+        hub.scale(0.6, 0.8);
+        
+        panel2.printAll(graphics);
+        return PAGE_EXISTS; 
+    }
 }

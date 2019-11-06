@@ -189,15 +189,14 @@ public class Frm9 extends javax.swing.JFrame {
                 .addGap(0, 0, 0))
         );
 
-        jMenu1.setText("Options");
+        jMenu1.setText("Opción");
         jMenu1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenu1ActionPerformed(evt);
             }
         });
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_TAB, 0));
-        jMenuItem1.setText("Volver");
+        jMenuItem1.setText("Regresar");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);

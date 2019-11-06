@@ -6,6 +6,14 @@
 package gui;
 
 import conn.Conection;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import static java.awt.print.Printable.NO_SUCH_PAGE;
+import static java.awt.print.Printable.PAGE_EXISTS;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -20,12 +28,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Rolando Andre
  */
-public class Frm10 extends javax.swing.JFrame {
+public class Frm10 extends javax.swing.JFrame implements Printable{
 
     /**
      * Creates new form Frm10
      */
     DefaultTableModel  modelo1= new DefaultTableModel();
+    private boolean band;
+    private String nombre_material_principal;
     
     public Frm10() {
         initComponents();
@@ -62,103 +72,152 @@ public class Frm10 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txt_codigoEstilo = new javax.swing.JTextField();
         cbo_material = new javax.swing.JComboBox();
         btn_ingresar = new javax.swing.JButton();
         btn_mostrar = new javax.swing.JButton();
+        spin1 = new javax.swing.JSpinner();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        panel2 = new javax.swing.JPanel();
+        txt_codigoEstilo = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla1 = new javax.swing.JTable();
-        spin1 = new javax.swing.JSpinner();
+        jLabel2 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(464, 485));
+
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setPreferredSize(new java.awt.Dimension(464, 485));
+        jPanel1.setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("Ingresar Materiales");
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("ASIGNACIÓN DE MATERIALES");
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(110, 30, 250, 22);
 
-        jLabel2.setText("Codigo de Estilo:");
-
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Material:");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(30, 140, 60, 20);
 
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Cantidad:");
+        jPanel1.add(jLabel4);
+        jLabel4.setBounds(30, 110, 60, 20);
 
         cbo_material.setModel(new javax.swing.DefaultComboBoxModel(new String[] { ".........................." }));
+        jPanel1.add(cbo_material);
+        cbo_material.setBounds(90, 140, 100, 25);
 
+        btn_ingresar.setForeground(new java.awt.Color(102, 102, 102));
         btn_ingresar.setText("Ingresar");
         btn_ingresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_ingresarActionPerformed(evt);
             }
         });
+        jPanel1.add(btn_ingresar);
+        btn_ingresar.setBounds(230, 90, 90, 30);
 
+        btn_mostrar.setForeground(new java.awt.Color(102, 102, 102));
         btn_mostrar.setText("Mostrar");
         btn_mostrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_mostrarActionPerformed(evt);
             }
         });
-
-        jScrollPane1.setViewportView(tabla1);
+        jPanel1.add(btn_mostrar);
+        btn_mostrar.setBounds(230, 130, 90, 30);
 
         spin1.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+        jPanel1.add(spin1);
+        spin1.setBounds(90, 110, 40, 25);
+
+        jButton1.setForeground(new java.awt.Color(102, 102, 102));
+        jButton1.setText("Modificar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1);
+        jButton1.setBounds(330, 130, 90, 30);
+
+        jButton2.setForeground(new java.awt.Color(102, 102, 102));
+        jButton2.setText("Eliminar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2);
+        jButton2.setBounds(330, 90, 90, 30);
+
+        panel2.setBackground(new java.awt.Color(255, 255, 255));
+        panel2.setLayout(null);
+        panel2.add(txt_codigoEstilo);
+        txt_codigoEstilo.setBounds(110, 10, 100, 25);
+
+        tabla1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabla1MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabla1);
+
+        panel2.add(jScrollPane1);
+        jScrollPane1.setBounds(10, 50, 390, 140);
+
+        jLabel2.setText("Codigo de Estilo:");
+        panel2.add(jLabel2);
+        jLabel2.setBounds(10, 10, 100, 20);
+
+        jPanel1.add(panel2);
+        panel2.setBounds(20, 170, 410, 200);
+
+        jButton3.setForeground(new java.awt.Color(102, 102, 102));
+        jButton3.setText("Imprimir");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3);
+        jButton3.setBounds(320, 380, 110, 40);
+
+        jMenu1.setText("Opción");
+
+        jMenuItem1.setText("Regresar");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(170, 170, 170)
-                .addComponent(jLabel1))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(140, 140, 140)
-                .addComponent(jLabel2)
-                .addGap(30, 30, 30)
-                .addComponent(txt_codigoEstilo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(140, 140, 140)
-                .addComponent(jLabel3)
-                .addGap(68, 68, 68)
-                .addComponent(cbo_material, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(140, 140, 140)
-                .addComponent(jLabel4)
-                .addGap(63, 63, 63)
-                .addComponent(spin1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(150, 150, 150)
-                .addComponent(btn_ingresar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(btn_mostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel1)
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(txt_codigoEstilo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(cbo_material, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(spin1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_ingresar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_mostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
         );
 
         pack();
@@ -207,6 +266,7 @@ public class Frm10 extends javax.swing.JFrame {
                                 if(input==0){
                                     st.executeUpdate("insert into dbo.FICHA_MATERIAL VALUES('"+Integer.toString(codigo_ficha)+"','"+Integer.toString(codigo_material)+"','"+Integer.toString(cantidad)+"')");
                                     JOptionPane.showMessageDialog(null,"Se ingresó correctamente!!");
+                                    listar();
                                 }
                             }else{
                                 JOptionPane.showMessageDialog(null,"El material ya ha sido asignado anteriormente!!","Mensaje",3);
@@ -232,9 +292,15 @@ public class Frm10 extends javax.swing.JFrame {
 
     private void btn_mostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_mostrarActionPerformed
         
+        listar();
+        
+    }//GEN-LAST:event_btn_mostrarActionPerformed
+
+    private void listar(){
         Connection cn=null;
         Statement st=null;
         try{
+            this.band=false;
             
             String codigo_estilo=txt_codigoEstilo.getText().toUpperCase().trim();
             
@@ -273,8 +339,130 @@ public class Frm10 extends javax.swing.JFrame {
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null,ex.getMessage());
         }
+    }
+    
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Connection cn=null;
+        Statement st=null;
+        try{
+            cn=Conection.getConnection();
+            st=cn.createStatement();
+            if(band){
+                String codigo_estilo=txt_codigoEstilo.getText().toUpperCase().trim();
+                if(!codigo_estilo.equalsIgnoreCase("")){
+                    if(Validacion.existe_codigo_estilo(codigo_estilo)){
+                            int cantidad=(int)spin1.getValue();
+                            
+                                int input=JOptionPane.showConfirmDialog(null, "Estás seguro?","Escoger una opción",2,3);
+                                if(input==0){
+                                    st.executeUpdate("update dbo.FICHA_MATERIAL set CANTIDAD='"+cantidad+"' where COD_FICHA=(select FT.COD_FICHA from dbo.FICHA_TECNICA FT where FT.COD_ESTILO='"+codigo_estilo+"') and COD_MATERIAL=(select M.COD_MATERIAL from dbo.MATERIAL M where M.NOMBRE='"+this.nombre_material_principal+"')");
+                            
+                                    this.band=false;
+
+                                    JOptionPane.showMessageDialog(null,"La cantidad ha sido modificada correctamente!!");
+                                    listar();
+                                }
+                        
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Ese código de estilo no existe!!","Mensaje",2);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null,"Ingrese un código de estilo para modificar material registrado!!","Mensaje",3);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null,"seleccione una fila de la tabla!!");
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null,ex.getMessage());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tabla1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla1MouseClicked
+        int fila_seleccionada=tabla1.getSelectedRow();
         
-    }//GEN-LAST:event_btn_mostrarActionPerformed
+        if(fila_seleccionada>=0){
+            cbo_material.setSelectedItem(tabla1.getValueAt(fila_seleccionada, 0).toString());
+            spin1.setValue(Integer.parseInt(tabla1.getValueAt(fila_seleccionada, 1).toString()));
+            this.nombre_material_principal=tabla1.getValueAt(fila_seleccionada, 0).toString();
+            this.band=true;
+        }
+    }//GEN-LAST:event_tabla1MouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Connection cn=null;
+        Statement st=null;
+        try{
+            cn=Conection.getConnection();
+            st=cn.createStatement();
+            if(band){
+                String codigo_estilo=txt_codigoEstilo.getText().toUpperCase().trim();
+                if(!codigo_estilo.equalsIgnoreCase("")){
+                    if(Validacion.existe_codigo_estilo(codigo_estilo)){
+                        String material=cbo_material.getSelectedItem().toString();
+                        if(!material.equalsIgnoreCase("..........................")){
+                            int cantidad=(int)spin1.getValue();
+                            
+                            boolean existe_material=false;
+                            
+                            ResultSet rs=st.executeQuery("select * from dbo.FICHA_MATERIAL FM where FM.COD_MATERIAL=(select M.COD_MATERIAL from dbo.MATERIAL M where M.NOMBRE='"+material+"') and FM.COD_FICHA=(select FT.COD_FICHA from dbo.FICHA_TECNICA FT where FT.COD_ESTILO='"+codigo_estilo+"')");
+                           
+                            if(rs.next()){
+                                existe_material=true;
+                            }
+                            
+                            if(existe_material){
+                                int input=JOptionPane.showConfirmDialog(null, "Estás seguro?","Escoger una opción",2,3);
+                                if(input==0){
+                                    st.executeUpdate("delete from dbo.FICHA_MATERIAL where COD_FICHA=(select FT.COD_FICHA from dbo.FICHA_TECNICA FT where FT.COD_ESTILO='"+codigo_estilo+"') and COD_MATERIAL=(select M.COD_MATERIAL from dbo.MATERIAL M where M.NOMBRE='"+material+"')");
+                            
+                                    this.band=false;
+
+                                    JOptionPane.showMessageDialog(null,"Se eliminó correctamente!!");
+                                    listar();
+                                }
+                            }else{
+                                JOptionPane.showMessageDialog(null,"No se pudo eliminar. El material no figura en la ficha técnica!!","Mensaje",3);
+                            }
+                        }else{
+                            JOptionPane.showMessageDialog(null,"Complete todos los campos!!","Mensaje",3);
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Ese código de estilo no existe!!","Mensaje",2);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null,"Ingrese un código de estilo para eliminar un material registrado!!","Mensaje",3);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null,"seleccione una fila de la tabla!!");
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null,ex.getMessage());
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        Frm5 obj=new Frm5();
+        obj.setVisible(true);
+        obj.setResizable(false);
+        obj.setLocationRelativeTo(null);
+        this.dispose();
+        
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try{
+            PrinterJob gap= PrinterJob.getPrinterJob();
+            gap.setPrintable(this);
+            boolean top=gap.printDialog();
+            if(top){
+                gap.print();
+            }
+            
+           
+        }catch(PrinterException ex){
+            JOptionPane.showMessageDialog(null, "Error de programa","Error\n"+ex.getMessage(),JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -315,13 +503,34 @@ public class Frm10 extends javax.swing.JFrame {
     private javax.swing.JButton btn_ingresar;
     private javax.swing.JButton btn_mostrar;
     private javax.swing.JComboBox cbo_material;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel panel2;
     private javax.swing.JSpinner spin1;
     private javax.swing.JTable tabla1;
     private javax.swing.JTextField txt_codigoEstilo;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+        if(pageIndex>0){
+            return NO_SUCH_PAGE;
+        }
+        Graphics2D hub=(Graphics2D) graphics;
+        hub.translate(pageFormat.getImageableX()+20,pageFormat.getImageableY()+20);
+        hub.scale(1.0, 1.0);
+        
+        panel2.printAll(graphics);
+        return PAGE_EXISTS; 
+    }
 }

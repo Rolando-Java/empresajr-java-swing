@@ -427,6 +427,7 @@ public class Frm6 extends javax.swing.JFrame {
                     st=cn.createStatement();
                     st.executeUpdate("delete from dbo.EMPLEADO_FICHA where COD_EMP=(select cod_emp from empleado where dni='"+this.dni+"')");
                     st.executeUpdate("delete from dbo.empleado where dni='"+this.dni+"'");//sentencia sql para eliminar una fila de la tabla donde el dni se encuentre
+                    st.executeUpdate("delete from dbo.AVANCE where COD_EMP=(select COD_EMP from dbo.EMPLEADO where DNI='"+this.dni+"')");
                     cargarTabla();
                     JOptionPane.showMessageDialog(null, "Se eliminó correctamente!!");
                 }
