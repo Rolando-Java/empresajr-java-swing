@@ -171,7 +171,7 @@ public class Frm5 extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1290, 580));
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
         jPanel1.setPreferredSize(new java.awt.Dimension(1290, 580));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N

@@ -54,9 +54,9 @@ public class Frm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(102, 0, 51));
-        setPreferredSize(new java.awt.Dimension(334, 445));
+        setPreferredSize(new java.awt.Dimension(330, 450));
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
         jPanel1.setPreferredSize(new java.awt.Dimension(334, 450));
 
         btn_sesion.setForeground(new java.awt.Color(51, 51, 51));
